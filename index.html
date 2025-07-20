@@ -6,6 +6,11 @@
   <title>Mallas curriculares - Facultad de Ciencias Administrativas </title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
+    <style>
+      html, body {
+        overflow-x: hidden;
+    }
+
     body {
       margin: 0;
       font-family: 'Poppins', serif;
@@ -262,7 +267,7 @@
 
     function renderMallaHTML(carrera) {
       if (carrera === 'Administración') {
-         return `<iframe src="administracion.html" style="width: 100%; min-height: 600px; border: none; margin-left: 1rem; margin-right: 1rem"></iframe>`;
+         return `<iframe src="administracion.html" style="width: 100%; min-height: 600px; border: none; display: block;"></iframe>`;
  -->`;
       } else if (carrera === 'Negocios Internacionales') {
         return `<p style="text-align: center;">Malla de Negocios Internacionales aún no está disponible.</p>`;
