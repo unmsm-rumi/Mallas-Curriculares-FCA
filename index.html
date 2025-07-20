@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mallas curriculares - Facultad de Ciencias Administrativas</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background-color: #fdf9f6;
+      font-family: 'Yeseva One', serif;
+      background-color: ##f6f1eb;
       color: #333;
     }
 
@@ -23,12 +23,24 @@
 
     .menu-icon {
       width: 30px;
-      height: 30px;
+      height: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       cursor: pointer;
+      padding: 5px;
+      margin-right: 10px;
     }
 
+    .menu-icon span {
+      display: block;
+      height: 4px;
+      background-color: #b3005e; /* rosado oscuro */
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
     .logo {
-      height: 40px;
+      height: 60px;
       cursor: pointer;
     }
 
@@ -127,13 +139,16 @@
 </head>
 <body>
   <header>
-    <img src="icon menu rosa.png" alt="icono menú rosa" class="menu-icon" onclick="toggleMenu()">
+    <div class="menu-icon" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
     <h2 id="titulo">Mallas curriculares - Facultad de Ciencias Administrativas</h2>
     <img src="Rumi.png" alt="logo Rumi" class="logo" onclick="location.reload()">
   </header>
 
   <nav class="menu" id="menu">
-    <img src="icon menu blanco.png" alt="icono menú blanco">
     <a href="#" onclick="cargarMalla('Administración')">Administración</a>
     <a href="#" onclick="cargarMalla('Negocios Internacionales')">Negocios Internacionales</a>
     <a href="#" onclick="cargarMalla('Turismo')">Turismo</a>
