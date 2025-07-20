@@ -67,10 +67,11 @@
 
     .menu a {
       display: block;
-      margin: 1rem 0;
+      margin: 0.8rem 0;
       color: white;
       text-decoration: none;
       font-weight: 600;
+      padding-left: 0.5rem;
     }
     
     .close-btn {
@@ -96,7 +97,7 @@
       cursor: pointer;
       align-self: center;
       width: 80%;
-      margin-bottom: 10px;
+      margin-bottom: 30px;
     }  
     
     .container {
@@ -161,7 +162,7 @@
 
     #malla-container {
       display: none;
-      padding-left: 280px;
+      padding-left: 20px;
     }
   </style>
 </head>
@@ -180,12 +181,12 @@
 
   <nav class="menu" id="menu">
     <button id="close-btn" class="close-btn" onclick="toggleMenu()">✕</button>
-    <a href="#" onclick="cargarMalla('Administración')">Administración</a>
-    <a href="#" onclick="cargarMalla('Negocios Internacionales')">Negocios Internacionales</a>
-    <a href="#" onclick="cargarMalla('Turismo')">Turismo</a>
-    <a href="#" onclick="cargarMalla('Marítima y Portuaria')">Marítima y Portuaria</a>
-    <a href="#" onclick="cargarMalla('Gastronomía')">Gastronomía</a>
-    <a href="#" onclick="cargarMalla('Marketing')">Marketing</a>
+    <a href="#" onclick="cargarMalla('Administración')">🗂️ Administración</a>
+    <a href="#" onclick="cargarMalla('Negocios Internacionales')">✈️ Negocios Internacionales</a>
+    <a href="#" onclick="cargarMalla('Turismo')">🏕️ Turismo</a>
+    <a href="#" onclick="cargarMalla('Marítima y Portuaria')">🚢 Marítima y Portuaria</a>
+    <a href="#" onclick="cargarMalla('Gastronomía')">🍽️ Gastronomía</a>
+    <a href="#" onclick="cargarMalla('Marketing')">📊 Marketing</a>
     <button class="back-btn" onclick="volverInicio()">Volver al inicio</button>
   </nav>
 
@@ -234,6 +235,7 @@
     function cargarMalla(carrera) {
       document.getElementById('titulo').textContent = 'Malla Curricular - ' + carrera;
       document.getElementById('menu').classList.remove('open');
+      document.getElementById('close-btn').style.display = 'none';
       document.getElementById('inicio').style.display = 'none';
       document.getElementById('malla-container').style.display = 'block';
       document.getElementById('malla-container').innerHTML = renderMallaHTML(carrera);
@@ -241,12 +243,12 @@
 
     function renderMallaHTML(carrera) {
       if (carrera === 'Administración') {
-         return `<div style="padding: 2rem;"><iframe src="administracion.html" style="width: 100%; height: 1000px; border: none;"></iframe>`;
+         return `<iframe src="administracion.html" style="width: 100%; height: 1000px; border: none;"></iframe>`;
  -->`;
       } else if (carrera === 'Negocios Internacionales') {
-        return `<p style="padding: 2rem;">Malla de Negocios Internacionales aún no está disponible.</p>`;
+        return `<p style="text-align: center;">Malla de Negocios Internacionales aún no está disponible.</p>`;
       } else {
-        return `<p style="padding: 2rem;">Malla de ` + carrera + ` aún no está disponible.</p>`;
+        return `<p style="text-align: center;">Malla de ` + carrera + ` aún no está disponible.</p>`;
       }
     }
   </script>
