@@ -35,7 +35,7 @@
     .menu-icon span {
       display: block;
       height: 4px;
-      background-color: #b3005e; /* rosado oscuro */
+      background-color: #c16167; 
       border-radius: 2px;
       transition: all 0.3s ease;
     }
@@ -48,14 +48,14 @@
     .menu {
       position: fixed;
       top: 0;
-      left: -100%;
-      width: 70%;
+      left: -250px;
+      width: 250px;
       height: 100vh;
       background-color: #c16167;
-      padding: 40px 20px;
+      padding: 2rem 1rem;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 1.2rem;
       transition: left 0.3s ease;
       z-index: 1000;
     }
@@ -71,14 +71,26 @@
       text-decoration: none;
       font-weight: 600;
     }
-
+    
+    .close-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      align-self: flex-end;
+      cursor: pointer;
+      margin-bottom: 1rem;
+    }
+    
     .container {
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
       padding: 2rem;
       flex-wrap: wrap;
+      gap: 2rem
     }
 
     .text-box {
@@ -103,6 +115,10 @@
       color: #a35353;
     }
 
+    .penguin {
+      max-width: 300px;
+    }
+    
     .go-button {
       display: inline-block;
       margin-top: 1rem;
@@ -113,10 +129,6 @@
       cursor: pointer;
       border-radius: 5px;
       font-weight: 600;
-    }
-
-    .penguin {
-      max-width: 300px;
     }
 
     footer {
@@ -144,10 +156,12 @@
       <span></span>
     </div>
     <h2 id="titulo">Mallas curriculares - Facultad de Ciencias Administrativas</h2>
-    <img src="Rumi.png" alt="logo Rumi" class="logo" onclick="location.reload()">
+    <a href="https://linktr.ee/rumi.unmsm?fbclid=PAZXh0bgNhZW0CMTEAAadWWIK5ERk8_97FwqeZvN7AZuVyQqKW6-0sm57QrUzMVuMynsT5HmHC0GtsGg_aem_YNA-r8pP-8s3qNvl3BXHpQ" target="_blank">
+      <img src="Rumi.png" alt="logo Rumi" class="logo">
   </header>
 
   <nav class="menu" id="menu">
+    <button class="close-btn" onclick="toggleMenu()">✕</button>
     <a href="#" onclick="cargarMalla('Administración')">Administración</a>
     <a href="#" onclick="cargarMalla('Negocios Internacionales')">Negocios Internacionales</a>
     <a href="#" onclick="cargarMalla('Turismo')">Turismo</a>
@@ -157,7 +171,7 @@
   </nav>
 
   <div class="container" id="inicio">
-    <img src="https://i.imgur.com/DYrgYEL.png" alt="pingüino con auriculares" class="penguin">
+    <img src="kibu.png" alt="pingüino con auriculares" class="penguin">
 
     <div class="text-box">
       <h3>¡Hola!</h3>
