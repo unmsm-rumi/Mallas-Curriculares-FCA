@@ -117,6 +117,7 @@
       background-color: #f6f1eb;
       padding: 1rem;
       border-radius: 10px;
+      align-items: center
     }
 
     .text-box h3 {
@@ -140,8 +141,7 @@
     }
     
     .go-button {
-      display: block;
-      margin-top: 1.5rem auto 0 auto;
+      display: inline-block;
       background-color: #a35353;
       color: white;
       padding: 0.8rem 1.5rem;
@@ -155,7 +155,7 @@
     footer {
       text-align: center;
       padding: 1rem;
-      font-size: 1.2rem;
+      font-size: 1rem;
     }
 
     .ig-link {
@@ -171,8 +171,6 @@
     
     #malla-container {
       display: none;
-      padding-left: 30px;
-      padding-right: 30px;
     }
   </style>
 </head>
@@ -264,7 +262,7 @@
 
     function renderMallaHTML(carrera) {
       if (carrera === 'Administración') {
-         return `<iframe src="administracion.html" style="width: 100%; min-height: 600px; border: none;"></iframe>`;
+         return `<iframe src="administracion.html" style="width: 100%; min-height: 600px; border: none; margin-left: 1rem; margin-right: 1rem"></iframe>`;
  -->`;
       } else if (carrera === 'Negocios Internacionales') {
         return `<p style="text-align: center;">Malla de Negocios Internacionales aún no está disponible.</p>`;
