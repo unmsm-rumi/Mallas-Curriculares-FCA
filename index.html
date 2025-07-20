@@ -56,8 +56,9 @@
       display: flex;
       flex-direction: column;
       gap: 1.2rem;
-      transition: left 0.3s ease;
+      transition: left 0.4s ease;
       z-index: 1000;
+      justify-content: space-between; /* esto empuja el botón hacia abajo */
     }
     
     .menu.open {
@@ -73,6 +74,7 @@
     }
     
     .close-btn {
+      display: none; /* oculto por defecto */
       background: none;
       border: none;
       color: white;
@@ -84,16 +86,19 @@
     }
 
     .back-btn {
-      margin-top: auto; /* lo empuja al fondo */
-      align-self: center; /* lo centra horizontalmente */
+      margin-top: auto;
       background-color: white;
       color: #c16167;
-      padding: 10px 20px;
       border: none;
-      border-radius: 6px;
-      font-weight: 600;
+      padding: 0.8rem 1rem;
+      border-radius: 5px;
+      font-weight: bold;
       cursor: pointer;
-    }
+      align-self: center;
+      width: 80%;
+      margin-bottom: 10px;
+    }  
+    
     .container {
       display: flex;
       flex-direction: row;
@@ -127,7 +132,7 @@
     }
 
     .penguin {
-      max-width: 500px;
+      max-width: 600px;
     }
     
     .go-button {
@@ -156,6 +161,7 @@
 
     #malla-container {
       display: none;
+      padding-left: 280px;
     }
   </style>
 </head>
@@ -173,7 +179,7 @@
   </header>
 
   <nav class="menu" id="menu">
-    <button class="close-btn" onclick="toggleMenu()">✕</button>
+    <button id="close-btn" class="close-btn" onclick="toggleMenu()">✕</button>
     <a href="#" onclick="cargarMalla('Administración')">Administración</a>
     <a href="#" onclick="cargarMalla('Negocios Internacionales')">Negocios Internacionales</a>
     <a href="#" onclick="cargarMalla('Turismo')">Turismo</a>
@@ -206,8 +212,17 @@
   <script>
     function toggleMenu() {
       const menu = document.getElementById('menu');
+      const closeBtn = document.getElementById('close-btn');
+    
       menu.classList.toggle('open');
-    }
+    
+      // Mostrar u ocultar la X según si el menú está abierto o no
+      if (menu.classList.contains('open')) {
+        closeBtn.style.display = 'block';
+      } else {
+        closeBtn.style.display = 'none';
+      }
+    
     function volverInicio() {
       document.getElementById('menu').classList.remove('open');
       document.getElementById('inicio').style.display = 'flex';
