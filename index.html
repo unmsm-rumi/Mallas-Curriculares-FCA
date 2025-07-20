@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mallas curriculares - Facultad de Ciencias Administrativas</title>
+  <title>Mallas curriculares - Facultad de Ciencias Administrativas </title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     body {
@@ -17,7 +17,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 2rem;
+      padding: 0.8rem 2rem;
       border-bottom: 1px solid #d7bfb5;
     }
 
@@ -41,7 +41,7 @@
     }
     
     .logo {
-      height: 50px;
+      height: 46px;
       cursor: pointer;
     }
     
@@ -99,7 +99,7 @@
       cursor: pointer;
       align-self: center;
       width: 80%;
-      margin-bottom: 30px;
+      margin-bottom: 40px;
     }  
     
     .container {
@@ -125,7 +125,8 @@
     }
 
     .text-box p {
-      font-size: 0.95rem;
+      font-size: 1.1rem;
+      text-align: justify;
     }
 
     .text-box .firma {
@@ -135,15 +136,16 @@
     }
 
     .penguin {
-      max-width: 500px;
+      max-width: 520px;
     }
     
     .go-button {
-      display: inline-block;
-      margin-top: 1rem;
+      display: block;
+      margin-top: 1.5rem auto 0 auto;
       background-color: #a35353;
       color: white;
-      padding: 0.5rem 1rem;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem
       border: none;
       cursor: pointer;
       border-radius: 5px;
@@ -153,7 +155,7 @@
     footer {
       text-align: center;
       padding: 1rem;
-      font-size: 1rem;
+      font-size: 1.2rem;
     }
 
     .ig-link {
@@ -169,7 +171,8 @@
     
     #malla-container {
       display: none;
-      padding-left: 20px;
+      padding-left: 30px;
+      padding-right: 30px;
     }
   </style>
 </head>
@@ -180,7 +183,7 @@
       <span></span>
       <span></span>
     </div>
-    <h2 id="titulo">Mallas curriculares - Facultad de Ciencias Administrativas</h2>
+    <h2 id="titulo">🎓 Mallas curriculares - Facultad de Ciencias Administrativas 🩷</h2>
     <a href="https://linktr.ee/rumi.unmsm?fbclid=PAZXh0bgNhZW0CMTEAAadWWIK5ERk8_97FwqeZvN7AZuVyQqKW6-0sm57QrUzMVuMynsT5HmHC0GtsGg_aem_YNA-r8pP-8s3qNvl3BXHpQ" target="_blank">
       <img src="Rumi.png" alt="logo Rumi" class="logo">
     </a>
@@ -261,7 +264,7 @@
 
     function renderMallaHTML(carrera) {
       if (carrera === 'Administración') {
-         return `<iframe src="administracion.html" style="width: 100%; height: 1000px; border: none;"></iframe>`;
+         return `<iframe src="administracion.html" style="width: 100%; min-height: 600px; border: none;"></iframe>`;
  -->`;
       } else if (carrera === 'Negocios Internacionales') {
         return `<p style="text-align: center;">Malla de Negocios Internacionales aún no está disponible.</p>`;
