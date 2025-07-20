@@ -56,6 +56,7 @@
       display: flex;
       flex-direction: column;
       gap: 1.2rem;
+      transform: translateX(-100%);
       transition: left 0.4s ease;
       z-index: 1000;
       justify-content: space-between; /* esto empuja el botón hacia abajo */
@@ -63,6 +64,7 @@
     
     .menu.open {
        left: 0;
+       transform: translateX(0);
     }
 
     .menu a {
@@ -159,7 +161,12 @@
       text-decoration: none;
       font-weight: 500;
     }
-
+    
+    #titulo {
+      font-size: 1.8rem; /* Aumenta el tamaño (ajústalo según tu gusto) */
+      font-weight: 600;
+    }
+    
     #malla-container {
       display: none;
       padding-left: 20px;
@@ -211,6 +218,15 @@
   </footer>
 
   <script>
+    const iconosCarreras = {
+      'Administración': '🗂️',
+      'Negocios Internacionales': '✈️',
+      'Turismo': '🏕️',
+      'Marítima y Portuaria': '🚢',
+      'Gastronomía': '🍽️',
+      'Marketing': '📊'
+    };
+    
     function toggleMenu() {
       const menu = document.getElementById('menu');
       const closeBtn = document.getElementById('close-btn');
@@ -230,10 +246,12 @@
       document.getElementById('inicio').style.display = 'flex';
       document.getElementById('malla-container').style.display = 'none';
       document.getElementById('titulo').textContent = 'Mallas curriculares - Facultad de Ciencias Administrativas';
+      document.getElementById('close-btn').style.display = 'none';
     }
     
     function cargarMalla(carrera) {
-      document.getElementById('titulo').textContent = 'Malla Curricular - ' + carrera;
+      const icono = iconosCarreras[carrera] || '📘';
+      document.getElementById('titulo').innerHTML = `${icono} Malla Curricular - ${carrera}`;
       document.getElementById('menu').classList.remove('open');
       document.getElementById('close-btn').style.display = 'none';
       document.getElementById('inicio').style.display = 'none';
