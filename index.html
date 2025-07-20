@@ -48,11 +48,11 @@
     .menu {
       position: fixed;
       top: 0;
-      left: -250px;
-      width: 250px;
+      left: -300px; /* cambia esto según el nuevo ancho */
+      width: 300px;  /* más ancho */
       height: 100vh;
       background-color: #c16167;
-      padding: 2rem 1rem;
+      padding: 2rem 1.5rem; /* más espacio lateral */
       display: flex;
       flex-direction: column;
       gap: 1.2rem;
@@ -82,7 +82,18 @@
       cursor: pointer;
       margin-bottom: 1rem;
     }
-    
+
+    .back-btn {
+      margin-top: auto; /* lo empuja al fondo */
+      align-self: center; /* lo centra horizontalmente */
+      background-color: white;
+      color: #c16167;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+    }
     .container {
       display: flex;
       flex-direction: row;
@@ -116,7 +127,7 @@
     }
 
     .penguin {
-      max-width: 300px;
+      max-width: 500px;
     }
     
     .go-button {
@@ -158,6 +169,7 @@
     <h2 id="titulo">Mallas curriculares - Facultad de Ciencias Administrativas</h2>
     <a href="https://linktr.ee/rumi.unmsm?fbclid=PAZXh0bgNhZW0CMTEAAadWWIK5ERk8_97FwqeZvN7AZuVyQqKW6-0sm57QrUzMVuMynsT5HmHC0GtsGg_aem_YNA-r8pP-8s3qNvl3BXHpQ" target="_blank">
       <img src="Rumi.png" alt="logo Rumi" class="logo">
+    </a>
   </header>
 
   <nav class="menu" id="menu">
@@ -168,6 +180,7 @@
     <a href="#" onclick="cargarMalla('Marítima y Portuaria')">Marítima y Portuaria</a>
     <a href="#" onclick="cargarMalla('Gastronomía')">Gastronomía</a>
     <a href="#" onclick="cargarMalla('Marketing')">Marketing</a>
+    <button class="back-btn" onclick="volverInicio()">Volver al inicio</button>
   </nav>
 
   <div class="container" id="inicio">
@@ -195,7 +208,13 @@
       const menu = document.getElementById('menu');
       menu.classList.toggle('open');
     }
-
+    function volverInicio() {
+      document.getElementById('menu').classList.remove('open');
+      document.getElementById('inicio').style.display = 'flex';
+      document.getElementById('malla-container').style.display = 'none';
+      document.getElementById('titulo').textContent = 'Mallas curriculares - Facultad de Ciencias Administrativas';
+    }
+    
     function cargarMalla(carrera) {
       document.getElementById('titulo').textContent = 'Malla Curricular - ' + carrera;
       document.getElementById('menu').classList.remove('open');
@@ -206,7 +225,7 @@
 
     function renderMallaHTML(carrera) {
       if (carrera === 'Administración') {
-         return `<iframe src="administracion.html" style="width: 100%; height: 1000px; border: none;"></iframe>`;
+         return `<div style="padding: 2rem;"><iframe src="administracion.html" style="width: 100%; height: 1000px; border: none;"></iframe>`;
  -->`;
       } else if (carrera === 'Negocios Internacionales') {
         return `<p style="padding: 2rem;">Malla de Negocios Internacionales aún no está disponible.</p>`;
