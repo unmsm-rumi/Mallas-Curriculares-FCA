@@ -157,6 +157,8 @@
       cursor: pointer;
       border-radius: 5px;
       font-weight: 600;
+      display: block;
+      margin: 1rem auto 0 auto;
     }
 
     footer {
@@ -270,7 +272,7 @@
 
     function renderMallaHTML(carrera) {
       if (carrera === 'Administración') {
-         return `<iframe src="administracion.html" style="width: 100vh; height: 100vh; border: none; display: block; overflow: hidden;" scrolling="no""></iframe>`;
+         return `<iframe src="administracion.html" style="width: 100%; min-height: 100vh; border: none; display: block;" scrolling="no"></iframe>`;
  -->`;
       } else if (carrera === 'Negocios Internacionales') {
         return `<p style="text-align: center;">Malla de Negocios Internacionales aún no está disponible.</p>`;
