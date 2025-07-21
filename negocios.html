@@ -435,7 +435,7 @@
                 const seleccionadas = Array.from(document.querySelectorAll('.opt:checked'));
                 if (seleccionadas.length > 2) {
                     opt.checked = false;
-                    alert('Solo puedes elegir 2 áreas electivas.');
+                    alert('⚠️ Solo puedes elegir 2 áreas electivas.');
                     return;
                 }
                 guardarElectivas();
