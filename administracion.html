@@ -453,9 +453,19 @@
                 const seleccionadas = Array.from(document.querySelectorAll('.opt:checked'));
                 if (seleccionadas.length > 2) {
                     opt.checked = false;
-                    alert('Solo puedes elegir 2 áreas electivas.');
+                    alert('⚠️ Solo puedes elegir 2 áreas electivas.');
                     return;
                 }
+                const valores = seleccionadas.map(e => e.value);
+                  // Alerta si se seleccionan Finanzas y Proyectos a la vez
+                  if (valores.includes('proyectos') && valores.includes('finanzas')) {
+                    alert('⚠️ Ten en cuenta que al elegir Finanzas y Proyectos no se alcanza el creditaje mínimo para egresar');
+                  } else if (valores.includes('proyectos')) {
+                    alert('⚠️ Considera que al elegir Proyectos no se alcanza el creditaje mínimo para egresar');
+                  } else if (valores.includes('finanzas')) {
+                    alert('⚠️ Considera que al elegir Finanzas no se alcanza el creditaje mínimo para egresar);
+                  }
+                
                 guardarElectivas();
                 renderCursos();
                 actualizarCreditos();
