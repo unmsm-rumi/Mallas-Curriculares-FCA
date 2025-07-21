@@ -456,15 +456,21 @@
                     alert('⚠️ Solo puedes elegir 2 áreas electivas.');
                     return;
                 }
-                const valores = seleccionadas.map(e => e.value);
-                  // Alerta si se seleccionan Finanzas y Proyectos a la vez
-                  if (valores.includes('proyectos') && valores.includes('finanzas')) {
-                    alert('⚠️ Ten en cuenta que al elegir Finanzas y Proyectos no se alcanza el creditaje mínimo para egresar');
-                  } else if (valores.includes('proyectos')) {
-                    alert('⚠️ Considera que al elegir Proyectos no se alcanza el creditaje mínimo para egresar');
-                  } else if (valores.includes('finanzas')) {
-                    alert('⚠️ Considera que al elegir Finanzas no se alcanza el creditaje mínimo para egresar');
-                  }
+                function handleSeleccion(elementoClickeado) {
+                    const valorClickeado = elementoClickeado.value;
+                      
+                      // Solo mostrar alerta si se seleccionó (no deseleccionó) proyectos o finanzas
+                      if (elementoClickeado.checked && (valorClickeado === 'proyectos' || valorClickeado === 'finanzas')) {
+                        const valores = seleccionadas.map(e => e.value);
+                        
+                        if (valores.includes('proyectos') && valores.includes('finanzas')) {
+                          alert('⚠️ Ten en cuenta que al elegir Finanzas y Proyectos no se alcanza el creditaje mínimo para egresar');
+                        } else if (valorClickeado === 'proyectos') {
+                          alert('⚠️ Considera que al elegir Proyectos no se alcanza el creditaje mínimo para egresar');
+                        } else if (valorClickeado === 'finanzas') {
+                          alert('⚠️ Considera que al elegir Finanzas no se alcanza el creditaje mínimo para egresar');
+                        }
+                      }
                 
                 guardarElectivas();
                 renderCursos();
