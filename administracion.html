@@ -337,6 +337,10 @@
             logística: "🏭"
         };
 
+        // Variables para controlar las alertas una sola vez
+        let alertaProyectosMostrada = false;
+        let alertaFinanzasMostrada = false;
+
         function guardarElectivas() {
             const seleccionadas = Array.from(document.querySelectorAll('.opt:checked')).map(e => e.value);
             localStorage.setItem('electivasSeleccionadas', JSON.stringify(seleccionadas));
@@ -392,9 +396,11 @@
 
         function renderCursos() {
             const contenedor = document.getElementById("contenedor-cursos");
+            if (!contenedor) return;
+            
             contenedor.innerHTML = ''; // Limpiar contenedor
             
-            const electivas = Array.from(document.querySelectorAll('.opt:checked')).map(e => e.value);
+            const electivas = JSON.parse(localStorage.getItem('electivasSeleccionadas') || '[]');
             
             const agrupados = cursos.reduce((acc, curso) => {
                 // Solo incluir cursos que están en las áreas seleccionadas o que no tienen área
@@ -447,66 +453,89 @@
             });
         }
 
-        // Event listeners para checkboxes de electivas
-        document.querySelectorAll('.opt').forEach(opt => {
-            opt.addEventListener('change', () => {
-                const seleccionadas = Array.from(document.querySelectorAll('.opt:checked'));
-                if (seleccionadas.length > 2) {
-                    opt.checked = false;
-                    alert('⚠️ Solo puedes elegir 2 áreas electivas.');
-                    return;
+        function mostrarAlerta(area, seleccionadas) {
+            if (area === 'proyectos' && !alertaProyectosMostrada) {
+                if (seleccionadas.includes('finanzas')) {
+                    alert('⚠️ Ten en cuenta que al elegir Finanzas y Proyectos no se alcanza el creditaje mínimo para egresar');
+                } else {
+                    alert('⚠️ Considera que al elegir Proyectos no se alcanza el creditaje mínimo para egresar');
                 }
-                function handleSeleccion(elementoClickeado) {
-                    const valorClickeado = elementoClickeado.value;
-                      
-                      // Solo mostrar alerta si se seleccionó (no deseleccionó) proyectos o finanzas
-                      if (elementoClickeado.checked && (valorClickeado === 'proyectos' || valorClickeado === 'finanzas')) {
-                        const valores = seleccionadas.map(e => e.value);
-                        
-                        if (valores.includes('proyectos') && valores.includes('finanzas')) {
-                          alert('⚠️ Ten en cuenta que al elegir Finanzas y Proyectos no se alcanza el creditaje mínimo para egresar');
-                        } else if (valorClickeado === 'proyectos') {
-                          alert('⚠️ Considera que al elegir Proyectos no se alcanza el creditaje mínimo para egresar');
-                        } else if (valorClickeado === 'finanzas') {
-                          alert('⚠️ Considera que al elegir Finanzas no se alcanza el creditaje mínimo para egresar');
-                        }
-                      }
-                
-                guardarElectivas();
-                renderCursos();
-                actualizarCreditos();
-            });
-        });
+                alertaProyectosMostrada = true;
+            } else if (area === 'finanzas' && !alertaFinanzasMostrada) {
+                if (seleccionadas.includes('proyectos')) {
+                    alert('⚠️ Ten en cuenta que al elegir Finanzas y Proyectos no se alcanza el creditaje mínimo para egresar');
+                } else {
+                    alert('⚠️ Considera que al elegir Finanzas no se alcanza el creditaje mínimo para egresar');
+                }
+                alertaFinanzasMostrada = true;
+            }
+        }
 
-        // Botón reset
-        document.getElementById("reset").addEventListener("click", () => {
-            // Eliminar el progreso de todos los cursos
-            cursos.forEach(curso => {
-                localStorage.removeItem(curso.nombre);
+        // Event listeners para checkboxes de electivas
+        function inicializarEventListeners() {
+            document.querySelectorAll('.opt').forEach(opt => {
+                opt.addEventListener('change', (e) => {
+                    const seleccionadasActuales = Array.from(document.querySelectorAll('.opt:checked'));
+                    
+                    // Verificar límite de 2 áreas
+                    if (seleccionadasActuales.length > 2) {
+                        e.target.checked = false;
+                        alert('⚠️ Solo puedes elegir 2 áreas electivas.');
+                        return;
+                    }
+
+                    // Si se está seleccionando (no deseleccionando)
+                    if (e.target.checked) {
+                        const valores = seleccionadasActuales.map(checkbox => checkbox.value);
+                        mostrarAlerta(e.target.value, valores);
+                    }
+
+                    guardarElectivas();
+                    renderCursos();
+                    actualizarCreditos();
+                });
             });
-        
-            // Eliminar áreas electivas seleccionadas
-            localStorage.removeItem('electivasSeleccionadas');
-        
-            // Destildar checkboxes de electivas
-            document.querySelectorAll('.opt').forEach(opt => opt.checked = false);
-        
-            // Volver a cargar todo
-            renderCursos();
-            actualizarCreditos();
-        });
+
+            // Botón reset
+            const resetBtn = document.getElementById("reset");
+            if (resetBtn) {
+                resetBtn.addEventListener("click", () => {
+                    // Eliminar el progreso de todos los cursos
+                    cursos.forEach(curso => {
+                        localStorage.removeItem(curso.nombre);
+                    });
+                
+                    // Eliminar áreas electivas seleccionadas
+                    localStorage.removeItem('electivasSeleccionadas');
+                
+                    // Reiniciar control de alertas
+                    alertaProyectosMostrada = false;
+                    alertaFinanzasMostrada = false;
+                
+                    // Destildar checkboxes de electivas
+                    document.querySelectorAll('.opt').forEach(opt => opt.checked = false);
+                
+                    // Volver a cargar todo
+                    renderCursos();
+                    actualizarCreditos();
+                });
+            }
+        }
 
         // Inicializar la aplicación
-        document.addEventListener('DOMContentLoaded', () => {
+        function inicializar() {
             cargarElectivas();
             renderCursos();
             actualizarCreditos();
-        });
-        
-        // También ejecutar inmediatamente por si el DOM ya está cargado
-        cargarElectivas();
-        renderCursos();
-        actualizarCreditos();
+            inicializarEventListeners();
+        }
+
+        // Esperar a que el DOM esté completamente cargado
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', inicializar);
+        } else {
+            inicializar();
+        }
     </script>
 </body>
 </html>
