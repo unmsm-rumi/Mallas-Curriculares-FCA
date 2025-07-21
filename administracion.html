@@ -1,6 +1,6 @@
 <div class="panel-superior">
   <div class="progreso">
-    <p><strong>Créditos completados: <span id="creditos">0</span> <span id="info-extra-creditos">(mín: 220)</span></strong></p>
+    <p><strong>Créditos completados: <span id="creditos">0</span> / <span id="total-creditos">0</span> <span id="info-extra-creditos">(mín: 220)</span></strong></p>
 
     <div class="barra-contenedor">
       <div class="barra-externa">
@@ -353,24 +353,33 @@
     }, 0);
   
   function actualizarCreditos() {
-    let suma = 0;
-    cursos.forEach(curso => {
-      if (localStorage.getItem(curso.nombre) === "true") {
-        suma += curso.creditos;
-      }
-    });
+  let suma = 0;
+  let total = 0;
+
+  cursos.forEach(curso => {
+    total += curso.creditos;
+
+        const estado = localStorage.getItem(curso.nombre);
+        if (estado === "true") {
+          suma += curso.creditos;
+        }
+      });
     
-    const totalCreditos = calcularCreditosTotales();
+      const minimo = 220;
+      const creditos = document.getElementById("creditos");
+      const totalCreditos = document.getElementById("total-creditos");
+      const extra = document.getElementById("info-extra-creditos");
+      const barra = document.getElementById("barra-progreso");
+      const porcentaje = document.getElementById("porcentaje");
     
-    const creditos = document.getElementById("creditos");
-    const barra = document.getElementById("barra-progreso");
-    const porcentaje = document.getElementById("porcentaje");
-  
-    if (creditos) creditos.textContent = `${suma}/${totalCreditos}`;
-    const porcentajeValor = Math.round((suma / totalCreditos) * 100);
-    if (barra) barra.style.width = `${porcentajeValor}%`;
-    if (porcentaje) porcentaje.textContent = porcentajeValor;
-  }
+      if (creditos) creditos.textContent = suma;
+      if (totalCreditos) totalCreditos.textContent = total;
+      if (extra) extra.textContent = `(mín: ${minimo})`;
+    
+      const porcentajeValor = Math.round((suma / total) * 100);
+      if (barra) barra.style.width = `${porcentajeValor}%`;
+      if (porcentaje) porcentaje.textContent = porcentajeValor;
+    }
 
     const iconosAreas = {
     talento: "👥",
@@ -381,7 +390,7 @@
   };
   
   function renderCursos() {
-    contenedor.innerHTML = "";
+    const contenedor = document.getElementById("contenedor-cursos");
     const electivas = Array.from(document.querySelectorAll('.opt:checked')).map(e => e.value);
     const agrupados = cursos.reduce((acc, curso) => {
       if (curso.area && !electivas.includes(curso.area)) return acc;
