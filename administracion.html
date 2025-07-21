@@ -442,7 +442,7 @@
 
                     if (div.classList.contains("activo") || div.classList.contains("tildado")) {
                         div.addEventListener("click", () => {
-                            const nuevo = !(localStorage.prefix + getItem(curso.nombre) === "true");
+                            const nuevo = !(localStorage + getItem(prefix + curso.nombre) === "true");
                             localStorage.setItem(prefix + curso.nombre, nuevo);
                             renderCursos();
                             actualizarCreditos();
