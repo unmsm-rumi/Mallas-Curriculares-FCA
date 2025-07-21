@@ -214,7 +214,7 @@
 
     <div class="text-box">
       <h3>¡Hola!</h3>
-      <p>En Rumi, sabemos lo valioso que es visualizar tu camino académico. Por eso, te ayudamos a explorar tu malla curricular de forma clara y a tu ritmo.</p>
+      <p>En Rumi, sabemos lo valioso que es visualizar tu avance en la carrera. Por eso, te ayudamos a explorar tu malla curricular de forma clara y a tu ritmo.</p>
       <p>Empieza a explorar tu camino académico con nosotros.</p>
       <p class="firma">Att. Kibu</p>
       <button class="go-button" onclick="toggleMenu()">Go!</button>
@@ -279,7 +279,10 @@
       } else if (carrera === 'Turismo') {
         return `<iframe src="turismo.html" style="width: 100%; min-height: 100vh; border: none; display: block;"></iframe>`;
       } else {
-        return `<p style="text-align: center;">🔧 La malla de ` + carrera + ` aún no está disponible debido a actualizaciones y falta de una estructura definida. Será publicada cuando contemos con una versión oficial y estable. Gracias por comprender.</p>`;
+        return `<p style="text-align: center;
+        ">🔧 La malla de ` + carrera + ` aún no está disponible debido a actualizaciones y falta de una estructura definida.<br> 
+        Será publicada cuando contemos con una versión oficial y estable. Gracias por comprender.
+        </p>`;
       }
     }
   </script>
