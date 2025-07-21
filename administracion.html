@@ -423,7 +423,7 @@
 
                 agrupados[ciclo].forEach(curso => {
                     const estado = localStorage.getItem(prefix + curso.nombre) === "true";
-                    const prereqCumplidos = !curso.prereq || curso.prereq.every(p => localStorage.getItem(p) === "true");
+                    const prereqCumplidos = !curso.prereq || curso.prereq.every(p => localStorage.getItem(prefix + p) === "true");
 
                     const div = document.createElement("div");
                     div.className = "curso";
@@ -442,7 +442,7 @@
 
                     if (div.classList.contains("activo") || div.classList.contains("tildado")) {
                         div.addEventListener("click", () => {
-                            const nuevo = !(localStorage + getItem(prefix + curso.nombre) === "true");
+                            const nuevo = !(localStorage.getItem(prefix + curso.nombre) === "true");
                             localStorage.setItem(prefix + curso.nombre, nuevo);
                             renderCursos();
                             actualizarCreditos();
@@ -506,7 +506,7 @@
                     // Eliminar el progreso de todos los cursos
                    for (let i = localStorage.length - 1; i >= 0; i--) {
                             const key = localStorage.key(i);
-                            if (key.startsWith(prefix)) {
+                            if (key && key.startsWith(prefix)) {
                                 localStorage.removeItem(key);
                         }
                     }
