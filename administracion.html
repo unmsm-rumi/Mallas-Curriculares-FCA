@@ -1,21 +1,25 @@
-<div class="selector-electivas" id="electivas">
-  <strong>Elige tus 2 áreas electivas:</strong><br>
-  <label><input type="checkbox" class="opt" value="talento"> 👥 Talento Humano </label><br>
-  <label><input type="checkbox" class="opt" value="finanzas"> 🏦 Finanzas </label><br>
-  <label><input type="checkbox" class="opt" value="proyectos"> 📁 Proyectos </label><br>
-  <label><input type="checkbox" class="opt" value="marketing"> 💡 Marketing </label><br>
-  <label><input type="checkbox" class="opt" value="logística"> 🏭 Logística</label>
+<div class="panel-superior">
+  <div class="progreso">
+    <p><strong>Créditos completados: <span id="creditos">0</span>/120</strong></p>
+    <div class="barra-externa">
+      <div class="barra-interna" id="barra-progreso" style="width: 0%;"></div>
+    </div>
+    <p><span id="porcentaje">0</span> %</p>
+    <button id="reset">Restablecer progreso</button>
+  </div>
+
+  <div class="selector-electivas" id="electivas">
+    <strong>Elige tus 2 áreas electivas:</strong><br>
+    <label><input type="checkbox" class="opt" value="talento"> 👥 Talento Humano </label><br>
+    <label><input type="checkbox" class="opt" value="finanzas"> 🏦 Finanzas </label><br>
+    <label><input type="checkbox" class="opt" value="proyectos"> 📁 Proyectos </label><br>
+    <label><input type="checkbox" class="opt" value="marketing"> 💡 Marketing </label><br>
+    <label><input type="checkbox" class="opt" value="logística"> 🏭 Logística</label>
+  </div>
 </div>
 
 <div class="malla-container" id="contenedor-cursos"></div>
-<div id="contador-creditos" style="text-align: center; font-weight: bold; margin: 20px;">
-  Créditos completados: <span id="creditos">0</span>
-</div>
-<div style="text-align: center; margin-top: 10px;">
-  <button id="reset" style="padding: 8px 16px; background-color: #ff99cc; color: white; border: none; border-radius: 6px; cursor: pointer;">
-    Restablecer progreso
-  </button>
-</div>
+
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -27,6 +31,52 @@
     overflow-y: auto;
     overflow-x: hidden;
   }
+  
+  .panel-superior {
+    max-width: 1200px;
+    margin: 20px auto;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .progreso {
+    background-color: #ffe6f0;
+    border: 1px solid #ffb6c1;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    min-width: 240px;
+  }
+  
+  .barra-externa {
+    width: 100%;
+    background-color: #fdd6e0;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 14px;
+    margin: 8px 0;
+  }
+  
+  .barra-interna {
+    height: 100%;
+    background-color: #cc3366;
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+  
+  .progreso button {
+    padding: 8px 16px;
+    background-color: #ff99cc;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 8px;
+  }
+
   .malla-container {
     display: flex;
     gap: 20px;
@@ -250,7 +300,10 @@
       opt.checked = guardadas.includes(opt.value);
     });
   }
-
+  function calcularCreditosTotales() {
+  return cursos.reduce((suma, curso) => suma + curso.creditos, 0);
+  }
+  
   function actualizarCreditos() {
     let suma = 0;
     cursos.forEach(curso => {
@@ -259,7 +312,14 @@
       }
     });
     const creditos = document.getElementById("creditos");
-    if (creditos) creditos.textContent = suma;
+    const barra = document.getElementById("barra-progreso");
+    const porcentaje = document.getElementById("porcentaje");
+  
+    if (creditos) creditos.textContent = `${suma}/${totalCreditos}`;
+    const totalCreditos = calcularCreditosTotales();
+    const porcentajeValor = Math.round((suma / totalCreditos) * 100);
+    if (barra) barra.style.width = `${porcentajeValor}%`;
+    if (porcentaje) porcentaje.textContent = porcentajeValor;
   }
 
     const iconosAreas = {
