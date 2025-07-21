@@ -1,6 +1,7 @@
 <div class="panel-superior">
   <div class="progreso">
-    <p><strong>Créditos completados: <span id="creditos">0</span>/120</strong></p>
+    <p><strong>Créditos completados: <span id="creditos">0</span> (mín 220)</strong></p>
+  <div class="barra-contenedor">
     <div class="barra-externa">
       <div class="barra-interna" id="barra-progreso" style="width: 0%;"></div>
     </div>
@@ -37,6 +38,7 @@
     margin: 20px auto;
     display: flex;
     gap: 20px;
+    justify-content: center;
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
@@ -45,18 +47,26 @@
   .progreso {
     background-color: #e6f0ff;
     border: 1px solid #99bbff;
-    padding: 15px;
-    border-radius: 8px;
+    padding: 20px;
+    border-radius: 12px;
     text-align: center;
-    min-width: 240px;
+    min-width: 300px;
+    flex: 1 1 350px;
   }
   
+  .barra-contenedor {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+  }
   .barra-externa {
+    flex: 1;
     width: 100%;
     background-color: #cce0ff;
     border-radius: 10px;
     overflow: hidden;
-    height: 14px;
+    height: 16px;
     margin: 8px 0;
   }
   
@@ -66,15 +76,25 @@
     width: 0%;
     transition: width 0.4s ease;
   }
+  .porcentaje {
+    font-weight: bold;
+    color: #0066cc;
+  }
   
   .progreso button {
-    padding: 8px 16px;
-    background-color: #6699ff;
+    padding: 10px 20px;
+    background-color: #4d94ff;
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
-    margin-top: 8px;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .progreso button:hover {
+    background-color: #1a75ff;
   }
   
   .malla-container {
@@ -172,10 +192,12 @@
   
   .selector-electivas {
     margin: 20px auto;
-    padding: 15px;
+    padding: 20px;
     background-color: #f0f8ff; /* azul claro */
     border: 1px solid #99bbff; /* borde azul suave */
-    border-radius: 8px;
+    border-radius: 12px;
+    min-width: 300px;
+    flex: 1 1 350px;
     max-width: 700px;
   }
 
@@ -312,8 +334,11 @@
     });
   }
   function calcularCreditosTotales() {
-  return cursos.reduce((suma, curso) => suma + curso.creditos, 0);
-  }
+    const electivas = JSON.parse(localStorage.getItem('electivasSeleccionadas') || '[]');
+    return cursos.reduce((suma, curso) => {
+      if (curso.area && !electivas.includes(curso.area)) return suma;
+      return suma + curso.creditos;
+    }, 0);
   
   function actualizarCreditos() {
     let suma = 0;
