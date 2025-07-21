@@ -330,8 +330,6 @@
     cursosGuardados = cursosPorDefecto;
   }
   
-  let cursos = cursosGuardados;
-  
   const contenedor = document.getElementById("contenedor-cursos");
 
   function guardarElectivas() {
@@ -350,7 +348,7 @@
     return cursos.reduce((suma, curso) => {
       if (curso.area && !electivas.includes(curso.area)) return suma;
       return suma + curso.creditos;
-    }, 0);
+    }, 0);}
   
   function actualizarCreditos() {
   let suma = 0;
@@ -390,6 +388,7 @@
   };
   
   function renderCursos() {
+    contenedor.innerHTML = ""; // Limpia antes de renderizar de nuevo
     const contenedor = document.getElementById("contenedor-cursos");
     const electivas = Array.from(document.querySelectorAll('.opt:checked')).map(e => e.value);
     const agrupados = cursos.reduce((acc, curso) => {
@@ -471,6 +470,7 @@
     document.querySelectorAll('.opt').forEach(opt => opt.checked = false);
   
     // Volver a cargar todo
+  cargarElectivas();
   renderCursos();
   actualizarCreditos();
 });
