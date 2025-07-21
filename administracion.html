@@ -8,6 +8,14 @@
 </div>
 
 <div class="malla-container" id="contenedor-cursos"></div>
+<div id="contador-creditos" style="text-align: center; font-weight: bold; margin: 20px;">
+  Créditos completados: <span id="creditos">0</span>
+</div>
+<div style="text-align: center; margin-top: 10px;">
+  <button id="reset" style="padding: 8px 16px; background-color: #ff99cc; color: white; border: none; border-radius: 6px; cursor: pointer;">
+    Restablecer progreso
+  </button>
+</div>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -23,14 +31,15 @@
     display: flex;
     gap: 20px;
     overflow-x: auto;
+    padding: 20px; 
     padding-bottom: 20px;
     max-width: 100vw;
     box-sizing: border-box;
   }
   .ciclo {
     width: 280px;
-    max-width: 280px;
-    min-width: 280px;
+    max-width: 320px;
+    min-width: 320px;
     flex-shrink: 0;
     background-color: #ffe6f0; /* rosado claro */
     border-radius: 12px;
@@ -242,6 +251,25 @@
     });
   }
 
+  function actualizarCreditos() {
+    let suma = 0;
+    cursos.forEach(curso => {
+      if (localStorage.getItem(curso.nombre) === "true") {
+        suma += curso.creditos;
+      }
+    });
+    const creditos = document.getElementById("creditos");
+    if (creditos) creditos.textContent = suma;
+  }
+
+    const iconosAreas = {
+    talento: "🧠",
+    finanzas: "💼",
+    proyectos: "📁",
+    marketing: "📊",
+    logística: "⚙️"
+  };
+  
   function renderCursos() {
     contenedor.innerHTML = "";
     const electivas = Array.from(document.querySelectorAll('.opt:checked')).map(e => e.value);
@@ -270,7 +298,8 @@
         else div.classList.add("bloqueado");
         if (curso.area) div.classList.add("electiva");
 
-        div.textContent = curso.nombre;
+        const icono = curso.area ? `${iconosAreas[curso.area]} ` : "";
+        div.textContent = icono + curso.nombre;
 
         const tooltip = document.createElement("div");
         tooltip.className = "tooltip";
@@ -282,6 +311,7 @@
             const nuevo = !(localStorage.getItem(curso.nombre) === "true");
             localStorage.setItem(curso.nombre, nuevo);
             renderCursos();
+            actualizarCreditos();
           });
         }
 
@@ -301,9 +331,29 @@
       }
       guardarElectivas();
       renderCursos();
+      actualizarCreditos();
     });
   });
 
   cargarElectivas();
   renderCursos();
+  actualizarCreditos();
+  
+  document.getElementById("reset").addEventListener("click", () => {
+  // Eliminar el progreso de todos los cursos
+  cursos.forEach(curso => {
+    localStorage.removeItem(curso.nombre);
+  });
+
+  // (Opcional) Eliminar áreas electivas seleccionadas
+  localStorage.removeItem('electivasSeleccionadas');
+
+  // Destildar checkboxes de electivas
+  document.querySelectorAll('.opt').forEach(opt => opt.checked = false);
+
+  // Volver a cargar todo
+  renderCursos();
+  actualizarCreditos();
+});
+  
 </script>
