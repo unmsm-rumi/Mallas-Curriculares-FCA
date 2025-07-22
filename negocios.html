@@ -318,21 +318,24 @@
             marketing: "💡",
             logistica: "🚢"
         };
-
+        
+        const carrera = 'negocios'; // Cambia por 'negocios', 'marketing', etc. en cada archivo
+        const prefix = carrera + '_';
+        
         function guardarElectivas() {
             const seleccionadas = Array.from(document.querySelectorAll('.opt:checked')).map(e => e.value);
-            localStorage.setItem('electivasSeleccionadas', JSON.stringify(seleccionadas));
+            localStorage.setItem(prefix + 'electivasSeleccionadas', JSON.stringify(seleccionadas));
         }
 
         function cargarElectivas() {
-            const guardadas = JSON.parse(localStorage.getItem('electivasSeleccionadas') || '[]');
+            const guardadas = JSON.parse(localStorage.getItem(prefix + 'electivasSeleccionadas') || '[]');
             document.querySelectorAll('.opt').forEach(opt => {
                 opt.checked = guardadas.includes(opt.value);
             });
         }
 
         function calcularCreditosTotales() {
-            const electivas = JSON.parse(localStorage.getItem('electivasSeleccionadas') || '[]');
+            const electivas = JSON.parse(localStorage.getItem(prefix + 'electivasSeleccionadas') || '[]');
             return cursos.reduce((suma, curso) => {
                 if (curso.area && !electivas.includes(curso.area)) return suma;
                 return suma + curso.creditos;
@@ -340,7 +343,7 @@
         }
 
         function actualizarCreditos() {
-            const electivas = JSON.parse(localStorage.getItem('electivasSeleccionadas') || '[]');
+            const electivas = JSON.parse(localStorage.getItem(prefix + 'electivasSeleccionadas') || '[]');
             let suma = 0;
             let total = 0;
 
@@ -350,7 +353,7 @@
                 
                 total += curso.creditos;
                 
-                const estado = localStorage.getItem(curso.nombre);
+                const estado = localStorage.getItem(prefix + curso.nombre);
                 if (estado === "true") {
                     suma += curso.creditos;
                 }
@@ -395,8 +398,8 @@
                 divCiclo.appendChild(titulo);
 
                 agrupados[ciclo].forEach(curso => {
-                    const estado = localStorage.getItem(curso.nombre) === "true";
-                    const prereqCumplidos = !curso.prereq || curso.prereq.every(p => localStorage.getItem(p) === "true");
+                    const estado = localStorage.getItem(prefix + curso.nombre) === "true";
+                    const prereqCumplidos = !curso.prereq || curso.prereq.every(p => localStorage.getItem(prefix + p) === "true");
 
                     const div = document.createElement("div");
                     div.className = "curso";
@@ -415,8 +418,8 @@
 
                     if (div.classList.contains("activo") || div.classList.contains("tildado")) {
                         div.addEventListener("click", () => {
-                            const nuevo = !(localStorage.getItem(curso.nombre) === "true");
-                            localStorage.setItem(curso.nombre, nuevo);
+                            const nuevo = !(localStorage.getItem(prefix + curso.nombre) === "true");
+                            localStorage.setItem(prefix + curso.nombre, nuevo);
                             renderCursos();
                             actualizarCreditos();
                         });
@@ -448,11 +451,11 @@
         document.getElementById("reset").addEventListener("click", () => {
             // Eliminar el progreso de todos los cursos
             cursos.forEach(curso => {
-                localStorage.removeItem(curso.nombre);
+                localStorage.removeItem(prefix + curso.nombre);
             });
         
             // Eliminar áreas electivas seleccionadas
-            localStorage.removeItem('electivasSeleccionadas');
+            localStorage.removeItem(prefix + 'electivasSeleccionadas');
         
             // Destildar checkboxes de electivas
             document.querySelectorAll('.opt').forEach(opt => opt.checked = false);
