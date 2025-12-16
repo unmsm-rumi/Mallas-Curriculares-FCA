@@ -237,7 +237,7 @@
             { nombre: "Fundamentos de Marketing", creditos: 3, ciclo: 3 },
             { nombre: "Microeconomía", creditos: 3, ciclo: 3, prereq: ["Realidad Nacional y Mundial"] },
             { nombre: "Estadística Descriptiva", creditos: 4, ciclo: 3, prereq: ["Matemática II"] },
-            { nombre: "Visión para el Desarrollo Sostenible", creditos: 3, ciclo: 3, prereq: ["Derechos Fundamentales, Ciudadanía y Derechos Humanos"] },
+            { nombre: "Visión para el Desarrollo Sostenible", creditos: 3, ciclo: 3, prereq: ["Derechos Fundamentales"] },
             { nombre: "Antropología y Sociología Aplicadas al Marketing", creditos: 4, ciclo: 3, prereq: ["Realidad Nacional y Mundial"] },
             { nombre: "Fundamentos de Contabilidad", creditos: 3, ciclo: 3 },
             { nombre: "Fundamentos de Administración", creditos: 3, ciclo: 3 },
@@ -253,7 +253,7 @@
             { nombre: "Investigación de Mercados Cuantitativa y Análisis Big Data", creditos: 4, ciclo: 5, prereq: ["Investigación de Mercados"] },
             { nombre: "Entorno Global de los Negocios", creditos: 3, ciclo: 5, prereq: ["Macroeconomía"] },
             { nombre: "Contabilidad Gerencial", creditos: 4, ciclo: 5, prereq: ["Costos y Presupuestos Aplicados al Marketing"] },
-            { nombre: "Derecho Comercial y del Consumidor", creditos: 3, ciclo: 5, prereq: ["Derechos Fundamentales, Ciudadanía y Derechos Humanos"] },
+            { nombre: "Derecho Comercial y del Consumidor", creditos: 3, ciclo: 5, prereq: ["Derechos Fundamentales"] },
             { nombre: "Innovación y Marketing Disruptivo", creditos: 3, ciclo: 5, prereq: ["Psicología Cognitiva Aplicada al Marketing"] },
             { nombre: "Planeamiento Estratégico", creditos: 3, ciclo: 5, prereq: ["Procesos Administrativos"] },
             { nombre: "Comportamiento del Consumidor", creditos: 3, ciclo: 5, prereq: ["Psicología Cognitiva Aplicada al Marketing"] },
@@ -428,24 +428,6 @@
 
                 contenedor.appendChild(divCiclo);
             });
-        }
-
-        function mostrarAlerta(area, seleccionadas) {
-            if (area === 'proyectos' && !alertaProyectosMostrada) {
-                if (seleccionadas.includes('finanzas')) {
-                    alert('⚠️ Ten en cuenta que al elegir Finanzas y Proyectos no se alcanza el creditaje mínimo para egresar');
-                } else {
-                    alert('⚠️ Considera que al elegir Proyectos no se alcanza el creditaje mínimo para egresar');
-                }
-                alertaProyectosMostrada = true;
-            } else if (area === 'finanzas' && !alertaFinanzasMostrada) {
-                if (seleccionadas.includes('proyectos')) {
-                    alert('⚠️ Ten en cuenta que al elegir Finanzas y Proyectos no se alcanza el creditaje mínimo para egresar');
-                } else {
-                    alert('⚠️ Considera que al elegir Finanzas no se alcanza el creditaje mínimo para egresar');
-                }
-                alertaFinanzasMostrada = true;
-            }
         }
 
         // Event listeners para checkboxes de electivas
