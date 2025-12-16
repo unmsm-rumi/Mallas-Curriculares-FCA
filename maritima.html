@@ -455,9 +455,9 @@
                     const seleccionadasActuales = Array.from(document.querySelectorAll('.opt:checked'));
                     
                     // Verificar límite de 2 áreas
-                    if (seleccionadasActuales.length > 2) {
+                    if (seleccionadasActuales.length > 1) {
                         e.target.checked = false;
-                        alert('⚠️ Solo puedes elegir 2 áreas electivas.');
+                        alert('⚠️ Solo puedes elegir 1 área electiva.');
                         return;
                     }
 
