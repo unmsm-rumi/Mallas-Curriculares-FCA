@@ -3,231 +3,369 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mallas curriculares - Facultad de Ciencias Administrativas </title>
+  <title>Mallas curriculares - Facultad de Ciencias Administrativas</title>
   <link rel="icon" type="image/x-icon" href="kibu.png">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --crema:       #fff7e4;
+      --rosa-claro:  #ef94a4;
+      --rosa-medio:  #d86d80;
+      --rosa-oscuro: #d55a68;
+      --rojo:        #c13850;
+      --sidebar-bg:  #c85c72;
+      --texto:       #3a1a20;
+      --texto-suave: #7a4a54;
+      --borde:       #e8c5cc;
+      --sombra:      rgba(193, 56, 80, 0.12);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     html, body {
       overflow-x: hidden;
+      height: 100%;
     }
 
     body {
-      margin: 0;
-      font-family: 'Poppins', serif;
-      background-color: #f6f1eb;
-      color: #333;
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--crema);
+      color: var(--texto);
       display: flex;
       flex-direction: column;
       min-height: 100vh;
     }
 
+    /* ── HEADER ─────────────────────────────────── */
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.8rem 2rem;
-      border-bottom: 1px solid #d7bfb5;
+      padding: 0.75rem 2rem;
+      background-color: var(--crema);
+      border-bottom: 2px solid var(--borde);
+      box-shadow: 0 2px 12px var(--sombra);
+      position: sticky;
+      top: 0;
+      z-index: 500;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
     }
 
     .menu-icon {
-      width: 30px;
-      height: 25px;
+      width: 28px;
+      height: 22px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       cursor: pointer;
-      padding: 5px;
-      margin-right: 10px;
+      padding: 2px;
     }
 
     .menu-icon span {
       display: block;
-      height: 4px;
-      background-color: #c16167; 
+      height: 3px;
+      background-color: var(--rojo);
       border-radius: 3px;
       transition: all 0.3s ease;
     }
-    
-    .logo {
-      height: 42px;
-      cursor: pointer;
-      margin-right: 1rem;
+
+    #titulo {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--texto);
+      letter-spacing: -0.01em;
     }
-    
+
+    .logo {
+      height: 40px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .logo:hover { opacity: 0.85; }
+
+    /* ── SIDEBAR ─────────────────────────────────── */
     .menu {
       position: fixed;
       top: 0;
-      left: -300px; /* cambia esto según el nuevo ancho */
-      width: 300px;  /* más ancho */
+      left: -320px;
+      width: 280px;
       height: 100vh;
-      background-color: #c16167;
-      padding: 2rem 1.5rem; /* más espacio lateral */
+      background-color: var(--sidebar-bg);
+      padding: 1.5rem 1.25rem 2rem;
       display: flex;
       flex-direction: column;
-      gap: 1.2rem;
-      transform: translateX(-100%);
-      transition: left 0.4s ease;
+      gap: 0.25rem;
+      transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 1000;
-      justify-content: space-between; /* esto empuja el botón hacia abajo */
+      box-shadow: 4px 0 24px rgba(0,0,0,0.15);
     }
-    
-    .menu.open {
-       left: 0;
-       transform: translateX(0);
+
+    .menu.open { left: 0; }
+
+    .menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.25);
+    }
+
+    .menu-logo {
+      height: 36px;
+    }
+
+    .close-btn {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      font-size: 18px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .close-btn:hover { background: rgba(255,255,255,0.35); }
+
+    .menu-section-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.5rem 0.75rem 0.25rem;
     }
 
     .menu a {
-      display: block;
-      margin: 0.8rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.65rem 0.75rem;
       color: white;
       text-decoration: none;
-      font-weight: 600;
-      padding-left: 0.5rem;
+      font-weight: 500;
+      font-size: 0.92rem;
+      border-radius: 8px;
+      transition: background 0.2s, transform 0.15s;
     }
-    
-    .close-btn {
-      display: none; /* oculto por defecto */
-      background: none;
-      border: none;
-      color: white;
-      font-size: 24px;
-      font-weight: bold;
-      align-self: flex-end;
-      cursor: pointer;
-      margin-bottom: 1rem;
+    .menu a:hover {
+      background: rgba(255,255,255,0.18);
+      transform: translateX(3px);
+    }
+
+    .menu-footer {
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.2);
     }
 
     .back-btn {
-      margin-top: auto;
+      width: 100%;
       background-color: white;
-      color: #c16167;
+      color: var(--sidebar-bg);
       border: none;
-      padding: 0.8rem 1rem;
-      border-radius: 5px;
-      font-weight: bold;
+      padding: 0.7rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
       cursor: pointer;
-      align-self: center;
-      width: 80%;
-      margin-bottom: 40px;
-    }  
-    
+      font-family: 'Poppins', sans-serif;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .back-btn:hover { background: var(--crema); transform: translateY(-1px); }
+
+    /* Overlay cuando menú está abierto */
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(58, 26, 32, 0.35);
+      z-index: 999;
+      backdrop-filter: blur(2px);
+    }
+    .overlay.show { display: block; }
+
+    /* ── INICIO ─────────────────────────────────── */
     .container {
       display: flex;
       flex-direction: row;
       justify-content: center;
       align-items: center;
-      padding: 2rem;
+      padding: 3rem 2rem;
       flex-wrap: wrap;
-      gap: 2rem
+      gap: 3rem;
+      flex: 1;
+    }
+
+    .penguin {
+      max-width: 380px;
+      width: 100%;
+      filter: drop-shadow(0 8px 24px var(--sombra));
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-10px); }
     }
 
     .text-box {
       max-width: 400px;
-      background-color: #f6f1eb;
-      padding: 1rem;
-      border-radius: 10px;
-      align-items: center
+      background-color: white;
+      padding: 2rem 2.25rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px var(--sombra);
+      border: 1px solid var(--borde);
     }
 
     .text-box h3 {
-      color: #a35353;
-      margin-top: 0;
+      color: var(--rojo);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
     }
 
     .text-box p {
-      font-size: 1.1rem;
+      font-size: 0.97rem;
+      line-height: 1.7;
+      color: var(--texto);
+      margin-bottom: 0.75rem;
       text-align: justify;
     }
 
     .text-box .firma {
       text-align: right;
       font-weight: 600;
-      color: #a35353;
+      color: var(--rosa-oscuro);
+      font-size: 0.95rem;
+      margin-top: 0.5rem;
     }
 
-    .penguin {
-      max-width: 520px;
-    }
-    
     .go-button {
-      display: inline-block;
-      background-color: #a35353;
+      display: block;
+      width: 100%;
+      background-color: var(--rojo);
       color: white;
-      padding: 0.8rem 1.5rem;
+      padding: 0.85rem 1.5rem;
       font-size: 1rem;
       border: none;
       cursor: pointer;
-      border-radius: 5px;
+      border-radius: 10px;
       font-weight: 600;
-      display: block;
-      margin: 1rem auto 0 auto;
+      font-family: 'Poppins', sans-serif;
+      margin-top: 1.5rem;
+      letter-spacing: 0.03em;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 14px rgba(193, 56, 80, 0.3);
+    }
+    .go-button:hover {
+      background-color: var(--rosa-oscuro);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(193, 56, 80, 0.4);
     }
 
-    footer {
-      text-align: center;
-      padding: 1rem;
-      font-size: 1rem;
-    }
-
-    .ig-link {
-      color: #a35353;
-      text-decoration: none;
-      font-weight: 500;
-    }
-    
-    #titulo {
-      font-size: 1.8rem; /* Aumenta el tamaño (ajústalo según tu gusto) */
-      font-weight: 600;
-    }
-    
+    /* ── MALLA CONTAINER ─────────────────────────── */
     #malla-container {
       display: none;
       flex: 1;
     }
+
+    /* ── FOOTER ─────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 1.25rem;
+      font-size: 0.88rem;
+      color: var(--texto-suave);
+      border-top: 1px solid var(--borde);
+      background-color: white;
+    }
+
+    .ig-link {
+      color: var(--rojo);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .ig-link:hover { color: var(--rosa-oscuro); }
+
+    /* ── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 640px) {
+      #titulo { font-size: 0.85rem; }
+      .container { padding: 2rem 1rem; gap: 1.5rem; }
+      .penguin { max-width: 260px; }
+      .text-box { padding: 1.5rem; }
+      .menu { width: 260px; }
+    }
   </style>
 </head>
 <body>
+
+  <!-- Overlay -->
+  <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+  <!-- HEADER -->
   <header>
-    <div class="menu-icon" onclick="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
+    <div class="header-left">
+      <div class="menu-icon" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+      <h2 id="titulo">🎓 Mallas curriculares — Facultad de Ciencias Administrativas</h2>
     </div>
-    <h2 id="titulo">🎓 Mallas curriculares - Facultad de Ciencias Administrativas 🩷</h2>
-    <a href="https://linktr.ee/rumi.unmsm?fbclid=PAZXh0bgNhZW0CMTEAAadWWIK5ERk8_97FwqeZvN7AZuVyQqKW6-0sm57QrUzMVuMynsT5HmHC0GtsGg_aem_YNA-r8pP-8s3qNvl3BXHpQ" target="_blank">
+    <a href="https://linktr.ee/rumi.unmsm" target="_blank">
       <img src="Rumi.png" alt="logo Rumi" class="logo">
     </a>
   </header>
 
+  <!-- SIDEBAR -->
   <nav class="menu" id="menu">
-    <button id="close-btn" class="close-btn" onclick="toggleMenu()">✕</button>
+    <div class="menu-header">
+      <span style="color:white;font-weight:700;font-size:1.05rem;">Rumi UNMSM</span>
+      <button class="close-btn" onclick="toggleMenu()">✕</button>
+    </div>
+
+    <span class="menu-section-label">Carreras</span>
     <a href="#" onclick="cargarMalla('Administración')">🗂️ Administración</a>
     <a href="#" onclick="cargarMalla('Negocios Internacionales')">✈️ Negocios Internacionales</a>
     <a href="#" onclick="cargarMalla('Turismo')">🏕️ Turismo</a>
     <a href="#" onclick="cargarMalla('Marítima y Portuaria')">🚢 Marítima y Portuaria</a>
     <a href="#" onclick="cargarMalla('Gastronomía')">🍽️ Gastronomía</a>
     <a href="#" onclick="cargarMalla('Marketing')">📊 Marketing</a>
-    <button class="back-btn" onclick="volverInicio()">Volver al inicio</button>
+
+    <div class="menu-footer">
+      <button class="back-btn" onclick="volverInicio()">← Volver al inicio</button>
+    </div>
   </nav>
 
+  <!-- INICIO -->
   <div class="container" id="inicio">
-    <img src="kibu.png" alt="pingüino con auriculares" class="penguin">
-
+    <img src="kibu.png" alt="Kibu el pingüino" class="penguin">
     <div class="text-box">
-      <h3>¡Hola!</h3>
+      <h3>¡Hola! 🩷</h3>
       <p>En Rumi, sabemos lo valioso que es visualizar tu avance en la carrera. Por eso, te ayudamos a explorar tu malla curricular de forma clara y a tu ritmo.</p>
       <p>Empieza a explorar tu camino académico con nosotros.</p>
-      <p class="firma">Att. Kibu</p>
-      <button class="go-button" onclick="toggleMenu()">Go!</button>
+      <p class="firma">Att. Kibu 🐧</p>
+      <button class="go-button" onclick="toggleMenu()">Explorar carreras →</button>
     </div>
   </div>
 
+  <!-- MALLA -->
   <div id="malla-container"></div>
 
+  <!-- FOOTER -->
   <footer>
     <a class="ig-link" href="https://www.instagram.com/rumi.unmsm/" target="_blank">
       📷 @rumi.unmsm
     </a>
+    &nbsp;·&nbsp; Rumi UNMSM &nbsp;·&nbsp; Facultad de Ciencias Administrativas
   </footer>
 
   <script>
@@ -239,52 +377,51 @@
       'Gastronomía': '🍽️',
       'Marketing': '📊'
     };
-    
+
     function toggleMenu() {
-      const menu = document.getElementById('menu');
-      const closeBtn = document.getElementById('close-btn');
-    
-      menu.classList.toggle('open');
-    
-      // Mostrar u ocultar la X según si el menú está abierto o no
-      if (menu.classList.contains('open')) {
-        closeBtn.style.display = 'block';
-      } else {
-        closeBtn.style.display = 'none';
-      }
+      const menu    = document.getElementById('menu');
+      const overlay = document.getElementById('overlay');
+      const isOpen  = menu.classList.toggle('open');
+      overlay.classList.toggle('show', isOpen);
     }
-    
+
     function volverInicio() {
       document.getElementById('menu').classList.remove('open');
+      document.getElementById('overlay').classList.remove('show');
       document.getElementById('inicio').style.display = 'flex';
       document.getElementById('malla-container').style.display = 'none';
-      document.getElementById('titulo').textContent = 'Mallas curriculares - Facultad de Ciencias Administrativas';
-      document.getElementById('close-btn').style.display = 'none';
+      document.getElementById('titulo').textContent = '🎓 Mallas curriculares — Facultad de Ciencias Administrativas';
     }
-    
+
     function cargarMalla(carrera) {
       const icono = iconosCarreras[carrera] || '📘';
-      document.getElementById('titulo').innerHTML = `${icono} Malla Curricular - ${carrera}`;
+      document.getElementById('titulo').innerHTML = `${icono} Malla Curricular — ${carrera}`;
       document.getElementById('menu').classList.remove('open');
-      document.getElementById('close-btn').style.display = 'none';
+      document.getElementById('overlay').classList.remove('show');
       document.getElementById('inicio').style.display = 'none';
-      document.getElementById('malla-container').style.display = 'block';
-      document.getElementById('malla-container').innerHTML = renderMallaHTML(carrera);
+      const mc = document.getElementById('malla-container');
+      mc.style.display = 'block';
+      mc.innerHTML = renderMallaHTML(carrera);
     }
 
     function renderMallaHTML(carrera) {
-      if (carrera === 'Administración') {
-         return `<iframe src="administracion.html" style="width: 100%; min-height: 100vh; border: none; display: block;"></iframe>`;
-      } else if (carrera === 'Negocios Internacionales') {
-        return `<iframe src="negocios.html" style="width: 100%; min-height: 100vh; border: none; display: block;"></iframe>`;
-      } else if (carrera === 'Turismo') {
-        return `<iframe src="turismo.html" style="width: 100%; min-height: 100vh; border: none; display: block;"></iframe>`;
-      } else {
-        return `<p style="text-align: center;
-        ">🔧 La malla de ` + carrera + ` aún no está disponible debido a actualizaciones y falta de una estructura definida.<br> 
-        Será publicada cuando contemos con una versión oficial y estable. Gracias por comprender.
-        </p>`;
+      const disponibles = {
+        'Administración':       'administracion.html',
+        'Negocios Internacionales': 'negocios.html',
+        'Turismo':              'turismo.html',
+      };
+      if (disponibles[carrera]) {
+        return `<iframe src="${disponibles[carrera]}" style="width:100%;min-height:100vh;border:none;display:block;"></iframe>`;
       }
+      return `
+        <div style="text-align:center;padding:4rem 2rem;color:#7a4a54;font-family:'Poppins',sans-serif;">
+          <div style="font-size:3rem;margin-bottom:1rem;">🔧</div>
+          <h3 style="color:#c13850;font-size:1.2rem;margin-bottom:0.75rem;">Próximamente disponible</h3>
+          <p style="max-width:480px;margin:0 auto;line-height:1.7;font-size:0.95rem;">
+            La malla de <strong>${carrera}</strong> aún no está disponible debido a actualizaciones.<br>
+            Será publicada cuando contemos con una versión oficial y estable. ¡Gracias por comprender!
+          </p>
+        </div>`;
     }
   </script>
 </body>
