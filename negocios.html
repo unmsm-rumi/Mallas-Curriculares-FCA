@@ -141,15 +141,10 @@
 
         .area-card:hover { border-color: var(--rojo); background: #ffe0e0; }
 
-        .area-card.principal {
+        .area-card.seleccionada {
             border-color: var(--rojo);
             background: #ffe0e0;
             box-shadow: 0 0 0 1px var(--rojo);
-        }
-
-        .area-card.secundaria {
-            border-color: var(--rosa-medio);
-            background: #fff0f0;
         }
 
         .area-card .badge {
@@ -162,9 +157,8 @@
             letter-spacing: 0.04em;
         }
 
-        .area-card.principal .badge { background: var(--rojo); color: white; }
-        .area-card.secundaria .badge { background: var(--rosa-medio); color: white; }
-        .area-card:not(.principal):not(.secundaria) .badge { display: none; }
+        .area-card.seleccionada .badge { background: var(--rojo); color: white; }
+        .area-card:not(.seleccionada) .badge { display: none; }
 
         .area-card .nombre {
             font-size: 0.82rem;
@@ -368,10 +362,9 @@
 
     <!-- SELECTOR DE ESPECIALIDADES -->
     <div class="selector-electivas">
-        <h3>🎯 Elige tus especialidades</h3>
+        <h3>🎯 Elige tus 2 especialidades</h3>
         <p class="subtitulo">
-            Haz clic una vez para marcar como <strong>Principal</strong>, dos veces para <strong>Secundaria</strong>, tres veces para quitar.<br>
-            Necesitas al menos 2 especialidades para alcanzar los 220 créditos mínimos.
+            Haz clic para seleccionar o deseleccionar un área. Debes elegir <strong>exactamente 2</strong> para alcanzar los 220 créditos mínimos.
         </p>
 
         <div class="areas-grid" id="areas-grid"></div>
@@ -504,9 +497,10 @@ function cargarEstadoAreas() {
     if (guardado) {
         estadoAreas = JSON.parse(guardado);
     } else {
+        // Compatibilidad con formato anterior (checkboxes)
         const viejas = JSON.parse(localStorage.getItem(prefix + 'electivasSeleccionadas') || '[]');
         estadoAreas = {};
-        viejas.forEach((a, i) => { estadoAreas[a] = i === 0 ? 'principal' : 'secundaria'; });
+        viejas.forEach(a => { estadoAreas[a] = 'seleccionada'; });
     }
 }
 
@@ -518,15 +512,16 @@ function areasSeleccionadas() {
 function renderAreasGrid() {
     const grid = document.getElementById('areas-grid');
     grid.innerHTML = '';
+    const selec = areasSeleccionadas();
     Object.entries(AREAS_INFO).forEach(([key, info]) => {
-        const estado = estadoAreas[key];
+        const activa = estadoAreas[key];
         const card = document.createElement('div');
-        card.className = 'area-card' + (estado ? ' ' + estado : '');
+        card.className = 'area-card' + (activa ? ' seleccionada' : '');
         card.dataset.area = key;
 
         const badge = document.createElement('span');
         badge.className = 'badge';
-        badge.textContent = estado === 'principal' ? 'PRINCIPAL' : estado === 'secundaria' ? 'SECUNDARIA' : '';
+        badge.textContent = '✓ Seleccionada';
 
         const nombre = document.createElement('span');
         nombre.className = 'nombre';
@@ -539,19 +534,22 @@ function renderAreasGrid() {
         card.appendChild(badge);
         card.appendChild(nombre);
         card.appendChild(cred);
-        card.addEventListener('click', () => ciclarEstadoArea(key));
+        card.addEventListener('click', () => toggleArea(key));
         grid.appendChild(card);
     });
 }
 
-function ciclarEstadoArea(area) {
-    const actual = estadoAreas[area];
-    if (!actual) {
-        estadoAreas[area] = 'principal';
-    } else if (actual === 'principal') {
-        estadoAreas[area] = 'secundaria';
-    } else {
+function toggleArea(area) {
+    if (estadoAreas[area]) {
+        // Desactivar
         delete estadoAreas[area];
+    } else {
+        // Activar solo si hay menos de 2 seleccionadas
+        if (areasSeleccionadas().length >= 2) {
+            alert('⚠️ Solo puedes elegir 2 especialidades. Deselecciona una primero.');
+            return;
+        }
+        estadoAreas[area] = 'seleccionada';
     }
     guardarEstadoAreas();
     renderAreasGrid();
