@@ -138,15 +138,10 @@
 
         .area-card:hover { border-color: var(--verde); background: #ddf0e0; }
 
-        .area-card.principal {
+        .area-card.seleccionada {
             border-color: var(--verde);
             background: #ddf0e0;
             box-shadow: 0 0 0 1px var(--verde);
-        }
-
-        .area-card.secundaria {
-            border-color: var(--verde-medio);
-            background: #edf7ef;
         }
 
         .area-card .badge {
@@ -159,9 +154,8 @@
             letter-spacing: 0.04em;
         }
 
-        .area-card.principal .badge  { background: var(--verde); color: white; }
-        .area-card.secundaria .badge { background: var(--verde-medio); color: white; }
-        .area-card:not(.principal):not(.secundaria) .badge { display: none; }
+        .area-card.seleccionada .badge { background: var(--verde); color: white; }
+        .area-card:not(.seleccionada) .badge { display: none; }
 
         .area-card .nombre {
             font-size: 0.82rem;
@@ -359,15 +353,14 @@
 
     <!-- SELECTOR DE ESPECIALIDADES -->
     <div class="selector-electivas">
-        <h3>🎯 Elige tus especialidades</h3>
+        <h3>🎯 Elige tus 2 especialidades</h3>
         <p class="subtitulo">
-            Haz clic una vez para marcar como <strong>Principal</strong>, dos veces para <strong>Secundaria</strong>, tres veces para quitar.<br>
-            En Turismo necesitas las <strong>3 áreas</strong> para alcanzar los 220 créditos mínimos (190 obligatorios + 15 por área).
+            Haz clic para seleccionar o deseleccionar un área. Debes elegir <strong>exactamente 2</strong> especialidades (15 créditos cada una).
         </p>
 
         <div class="areas-grid" id="areas-grid"></div>
 
-        <p class="instruccion">💡 Con solo 2 áreas llegas a 220 cr — con las 3 llegas a 235 cr.</p>
+        <p class="instruccion">💡 Con 2 especialidades sumas 30 créditos electivos.</p>
 
         <div class="resumen-creditos">
             <h4>📊 Créditos por área seleccionada</h4>
@@ -509,14 +502,14 @@ function renderAreasGrid() {
     const grid = document.getElementById('areas-grid');
     grid.innerHTML = '';
     Object.entries(AREAS_INFO).forEach(([key, info]) => {
-        const estado = estadoAreas[key];
+        const activa = estadoAreas[key];
         const card = document.createElement('div');
-        card.className = 'area-card' + (estado ? ' ' + estado : '');
+        card.className = 'area-card' + (activa ? ' seleccionada' : '');
         card.dataset.area = key;
 
         const badge = document.createElement('span');
         badge.className = 'badge';
-        badge.textContent = estado === 'principal' ? 'PRINCIPAL' : estado === 'secundaria' ? 'SECUNDARIA' : '';
+        badge.textContent = '✓ Seleccionada';
 
         const nombre = document.createElement('span');
         nombre.className = 'nombre';
@@ -529,19 +522,20 @@ function renderAreasGrid() {
         card.appendChild(badge);
         card.appendChild(nombre);
         card.appendChild(cred);
-        card.addEventListener('click', () => ciclarEstadoArea(key));
+        card.addEventListener('click', () => toggleArea(key));
         grid.appendChild(card);
     });
 }
 
-function ciclarEstadoArea(area) {
-    const actual = estadoAreas[area];
-    if (!actual) {
-        estadoAreas[area] = 'principal';
-    } else if (actual === 'principal') {
-        estadoAreas[area] = 'secundaria';
-    } else {
+function toggleArea(area) {
+    if (estadoAreas[area]) {
         delete estadoAreas[area];
+    } else {
+        if (areasSeleccionadas().length >= 2) {
+            alert('⚠️ Solo puedes elegir 2 especialidades. Deselecciona una primero.');
+            return;
+        }
+        estadoAreas[area] = 'seleccionada';
     }
     guardarEstadoAreas();
     renderAreasGrid();
