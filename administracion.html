@@ -709,8 +709,20 @@ function renderCursos() {
 
             if (div.classList.contains('activo') || div.classList.contains('tildado')) {
                 div.addEventListener('click', () => {
-                    const nuevo = !(localStorage.getItem(prefix + c.nombre) === 'true');
-                    localStorage.setItem(prefix + c.nombre, nuevo);
+                    const yaCompletado = localStorage.getItem(prefix + c.nombre) === 'true';
+
+                    // Si va a MARCAR (no desmarcar), verificar límite de 26 cr por ciclo
+                    if (!yaCompletado) {
+                        const creditosCiclo = cursos
+                            .filter(x => x.ciclo === c.ciclo && localStorage.getItem(prefix + x.nombre) === 'true')
+                            .reduce((s, x) => s + x.creditos, 0);
+                        if (creditosCiclo + c.creditos > 26) {
+                            alert('⚠️ Límite de 26 créditos por ciclo.\nYa tienes ' + creditosCiclo + ' cr en el ' + c.ciclo + '° ciclo y este curso tiene ' + c.creditos + ' cr (total: ' + (creditosCiclo + c.creditos) + ' cr).');
+                            return;
+                        }
+                    }
+
+                    localStorage.setItem(prefix + c.nombre, !yaCompletado);
                     renderCursos();
                     actualizarCreditos();
                 });
