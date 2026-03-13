@@ -29,7 +29,6 @@
             overflow-x: hidden;
         }
 
-        /* ── PANEL SUPERIOR ─────────────────────── */
         .panel-superior {
             max-width: 1200px;
             margin: 24px auto;
@@ -41,7 +40,6 @@
             padding: 0 16px;
         }
 
-        /* ── PROGRESO ───────────────────────────── */
         .progreso {
             background-color: white;
             border: 1px solid var(--borde);
@@ -97,7 +95,6 @@
             transform: translateY(-1px);
         }
 
-        /* ── SELECTOR ESPECIALIDADES ─────────────── */
         .selector-electivas {
             background-color: white;
             border: 1px solid var(--borde);
@@ -186,7 +183,6 @@
             font-style: italic;
         }
 
-        /* ── RESUMEN CRÉDITOS POR ÁREA ───────────── */
         .resumen-creditos {
             margin-top: 14px;
             border-top: 1px solid var(--borde);
@@ -224,7 +220,6 @@
         }
         .fila-area .cred-txt { width: 55px; text-align: right; color: #3a6b47; font-weight: 600; }
 
-        /* ── MALLA ───────────────────────────────── */
         .malla-container {
             display: flex;
             gap: 16px;
@@ -264,7 +259,6 @@
             font-weight: 500;
         }
 
-        /* ── CURSO ───────────────────────────────── */
         .curso {
             position: relative;
             padding: 9px 10px;
@@ -299,9 +293,8 @@
             border-color: var(--borde);
         }
 
-        /* Electivas con borde izquierdo de color */
-        .curso.electiva-turisticos   { border-left: 3px solid #3d7f50; }
-        .curso.electiva-hospedaje    { border-left: 3px solid #5c9c6f; }
+        .curso.electiva-turisticos    { border-left: 3px solid #3d7f50; }
+        .curso.electiva-hospedaje     { border-left: 3px solid #5c9c6f; }
         .curso.electiva-gastronomicos { border-left: 3px solid #92c3a0; }
 
         .curso.oculto { display: none; }
@@ -314,7 +307,6 @@
             font-size: 0.65rem;
         }
 
-        /* ── TOOLTIP ─────────────────────────────── */
         .tooltip {
             position: absolute;
             bottom: 110%;
@@ -336,7 +328,6 @@
 
         .curso:hover .tooltip { display: block; }
 
-        /* ── AVISO CRÉDITOS ──────────────────────── */
         .aviso {
             text-align: center;
             padding: 10px 20px;
@@ -371,12 +362,12 @@
         <h3>🎯 Elige tus especialidades</h3>
         <p class="subtitulo">
             Haz clic una vez para marcar como <strong>Principal</strong>, dos veces para <strong>Secundaria</strong>, tres veces para quitar.<br>
-            En Turismo necesitas las <strong>3 áreas</strong> para alcanzar los 220 créditos mínimos (190 obligatorios + 12 por área).
+            En Turismo necesitas las <strong>3 áreas</strong> para alcanzar los 220 créditos mínimos (190 obligatorios + 15 por área).
         </p>
 
         <div class="areas-grid" id="areas-grid"></div>
 
-        <p class="instruccion">💡 Con solo 2 áreas llegas a 214 cr — necesitas las 3 para superar el mínimo (226 cr).</p>
+        <p class="instruccion">💡 Con solo 2 áreas llegas a 220 cr — con las 3 llegas a 235 cr.</p>
 
         <div class="resumen-creditos">
             <h4>📊 Créditos por área seleccionada</h4>
@@ -484,9 +475,9 @@ const cursos = [
 ];
 
 const AREAS_INFO = {
-    turisticos:    { label: "🧳 Servicios Turísticos",   creditos: 12 },
-    hospedaje:     { label: "🏨 Servicios de Hospedaje", creditos: 12 },
-    gastronomicos: { label: "🍛 Servicios Gastronómicos", creditos: 12 },
+    turisticos:    { label: "🧳 Servicios Turísticos",    creditos: 15 }, // ← cambiado de 12 a 15
+    hospedaje:     { label: "🏨 Servicios de Hospedaje",  creditos: 15 }, // ← cambiado de 12 a 15
+    gastronomicos: { label: "🍛 Servicios Gastronómicos", creditos: 15 }, // ← cambiado de 12 a 15
 };
 
 const CREDITOS_MINIMOS = 220;
@@ -495,7 +486,6 @@ const prefix  = carrera + '_';
 
 let estadoAreas = {};
 
-// ── PERSISTENCIA ─────────────────────────────
 function guardarEstadoAreas() {
     localStorage.setItem(prefix + 'estadoAreas', JSON.stringify(estadoAreas));
 }
@@ -515,7 +505,6 @@ function areasSeleccionadas() {
     return Object.keys(estadoAreas).filter(a => estadoAreas[a]);
 }
 
-// ── RENDER CARDS DE ÁREAS ─────────────────────
 function renderAreasGrid() {
     const grid = document.getElementById('areas-grid');
     grid.innerHTML = '';
@@ -561,7 +550,6 @@ function ciclarEstadoArea(area) {
     actualizarCreditos();
 }
 
-// ── RESUMEN CRÉDITOS POR ÁREA ─────────────────
 function renderResumenAreas() {
     const contenedor = document.getElementById('resumen-areas');
     const selec = areasSeleccionadas();
@@ -587,7 +575,6 @@ function renderResumenAreas() {
     });
 }
 
-// ── BARRA DE PROGRESO ─────────────────────────
 function actualizarCreditos() {
     const selec = areasSeleccionadas();
     let suma = 0, total = 0;
@@ -618,7 +605,6 @@ function actualizarCreditos() {
     renderResumenAreas();
 }
 
-// ── RENDER MALLA ──────────────────────────────
 function renderCursos() {
     const contenedor = document.getElementById('contenedor-cursos');
     contenedor.innerHTML = '';
@@ -694,7 +680,6 @@ function renderCursos() {
     });
 }
 
-// ── RESET ─────────────────────────────────────
 function inicializarEventListeners() {
     document.getElementById('reset').addEventListener('click', () => {
         if (!confirm('¿Seguro que quieres restablecer todo el progreso?')) return;
@@ -709,7 +694,6 @@ function inicializarEventListeners() {
     });
 }
 
-// ── INICIALIZAR ───────────────────────────────
 function inicializar() {
     cargarEstadoAreas();
     renderAreasGrid();
