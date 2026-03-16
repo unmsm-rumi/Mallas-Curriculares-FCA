@@ -31,7 +31,6 @@
             overflow-x: hidden;
         }
 
-        /* ── PANEL SUPERIOR ─────────────────────── */
         .panel-superior {
             max-width: 1200px;
             margin: 24px auto;
@@ -43,7 +42,6 @@
             padding: 0 16px;
         }
 
-        /* ── PROGRESO ───────────────────────────── */
         .progreso {
             background-color: white;
             border: 1px solid var(--borde);
@@ -99,7 +97,6 @@
             transform: translateY(-1px);
         }
 
-        /* ── SELECTOR ESPECIALIDADES ─────────────── */
         .selector-electivas {
             background-color: white;
             border: 1px solid var(--borde);
@@ -188,7 +185,6 @@
             font-style: italic;
         }
 
-        /* ── CRÉDITOS POR ÁREA ───────────────────── */
         .resumen-creditos {
             margin-top: 14px;
             border-top: 1px solid var(--borde);
@@ -226,7 +222,6 @@
         }
         .fila-area .cred-txt { width: 55px; text-align: right; color: #7a4a54; font-weight: 600; }
 
-        /* ── MALLA ───────────────────────────────── */
         .malla-container {
             display: flex;
             gap: 16px;
@@ -258,7 +253,6 @@
             border-bottom: 2px solid var(--borde);
         }
 
-        /* Créditos del ciclo */
         .ciclo-creditos {
             text-align: center;
             font-size: 0.72rem;
@@ -267,7 +261,6 @@
             font-weight: 500;
         }
 
-        /* ── CURSO ───────────────────────────────── */
         .curso {
             position: relative;
             padding: 9px 10px;
@@ -302,14 +295,12 @@
             border-color: var(--borde);
         }
 
-        /* Electivas con borde izquierdo de color */
         .curso.electiva-talento   { border-left: 3px solid #0047b3; }
         .curso.electiva-finanzas  { border-left: 3px solid #3366cc; }
         .curso.electiva-proyectos { border-left: 3px solid #4d94ff; }
         .curso.electiva-marketing { border-left: 3px solid #6699ff; }
         .curso.electiva-logistica { border-left: 3px solid #99bbff; }
 
-        /* Curso no visible (área no seleccionada) */
         .curso.oculto { display: none; }
 
         .curso.bloqueado::after {
@@ -320,7 +311,6 @@
             font-size: 0.65rem;
         }
 
-        /* ── TOOLTIP ─────────────────────────────── */
         .tooltip {
             position: absolute;
             bottom: 110%;
@@ -342,7 +332,6 @@
 
         .curso:hover .tooltip { display: block; }
 
-        /* ── AVISO CRÉDITOS ──────────────────────── */
         .aviso {
             text-align: center;
             padding: 10px 20px;
@@ -362,7 +351,6 @@
 
 <div class="panel-superior">
 
-    <!-- PROGRESO -->
     <div class="progreso">
         <p><strong>Créditos completados: <span id="creditos">0</span> / <span id="total-creditos">0</span></strong> <span style="color:#7a4a54;font-size:0.8rem;">(mín: 220)</span></p>
         <div class="barra-externa">
@@ -372,7 +360,6 @@
         <button id="reset">↺ Restablecer progreso</button>
     </div>
 
-    <!-- SELECTOR DE ESPECIALIDADES -->
     <div class="selector-electivas">
         <h3>🎯 Elige tus especialidades</h3>
         <p class="subtitulo">
@@ -380,9 +367,7 @@
             Puedes elegir las que quieras — el sistema te mostrará los cursos y calculará tus créditos.
         </p>
 
-        <div class="areas-grid" id="areas-grid">
-            <!-- Generado por JS -->
-        </div>
+        <div class="areas-grid" id="areas-grid"></div>
 
         <p class="instruccion">💡 Con una sola especialidad no se alcanza el mínimo de 220 cr. Combina áreas hasta completarlo.</p>
 
@@ -394,7 +379,6 @@
 
 </div>
 
-<!-- MALLA -->
 <div class="malla-container" id="contenedor-cursos"></div>
 
 <script>
@@ -451,7 +435,7 @@ const cursos = [
     { nombre: "Formulación y evaluación de proyectos de Inversión", creditos: 3, ciclo: 6, prereq: ["Herramientas para el Desarrollo de Proyectos"], area: "proyectos" },
     { nombre: "Marketing Digital", creditos: 3, ciclo: 6, prereq: ["Fundamentos de Marketing"], area: "marketing" },
     { nombre: "Comportamiento del consumidor", creditos: 3, ciclo: 6, area: "marketing" },
-    { nombre: "Planeación de la demanda, pronósticos y simuladores", creditos: 3, ciclo: 6, area: "logística" },
+    { nombre: "Planeación de la demanda, pronósticos y simuladores", creditos: 3, ciclo: 6, prereq: ["Cadenas de Suministros"], area: "logística" },
     { nombre: "Investigación, desarrollo e innovación", creditos: 3, ciclo: 6, area: "logística" },
     // 7mo - obligatorios
     { nombre: "Negocios Internacionales", creditos: 4, ciclo: 7 },
@@ -466,7 +450,8 @@ const cursos = [
     { nombre: "Gestión de Riesgos de los Proyectos", creditos: 3, ciclo: 7, area: "proyectos" },
     { nombre: "Marketing de servicios", creditos: 3, ciclo: 7, prereq: ["Marketing Digital"], area: "marketing" },
     { nombre: "Programación Neurolingüística", creditos: 3, ciclo: 7, area: "marketing" },
-    { nombre: "Operaciones I", creditos: 3, ciclo: 7, area: "logística" },
+    // Logística 7mo — cadena principal conectada, paralela sin cambios
+    { nombre: "Operaciones I", creditos: 3, ciclo: 7, prereq: ["Planeación de la demanda, pronósticos y simuladores"], area: "logística" },
     { nombre: "Aprovisionamiento y negociación", creditos: 3, ciclo: 7, area: "logística" },
     // 8vo - obligatorios
     { nombre: "Integración Económica", creditos: 3, ciclo: 8, prereq: ["Negocios Internacionales"] },
@@ -482,7 +467,8 @@ const cursos = [
     { nombre: "Gestión de proyectos públicos y privados", creditos: 3, ciclo: 8, area: "proyectos" },
     { nombre: "Marketing internacional", creditos: 3, ciclo: 8, prereq: ["Marketing de servicios"], area: "marketing" },
     { nombre: "Publicidad y Branding", creditos: 3, ciclo: 8, area: "marketing" },
-    { nombre: "Operaciones II", creditos: 3, ciclo: 8, area: "logística" },
+    // Logística 8vo — cadena principal conectada, paralela sin cambios
+    { nombre: "Operaciones II", creditos: 3, ciclo: 8, prereq: ["Operaciones I"], area: "logística" },
     { nombre: "Gestión de almacenes e inventarios", creditos: 3, ciclo: 8, area: "logística" },
     // 9no - obligatorios
     { nombre: "Cadena de Valor", creditos: 3, ciclo: 9 },
@@ -497,7 +483,8 @@ const cursos = [
     { nombre: "Gerencia de Proyectos", creditos: 3, ciclo: 9, prereq: ["Formulación y evaluación de proyectos sociales II"], area: "proyectos" },
     { nombre: "Gerencia de Ventas", creditos: 3, ciclo: 9, area: "marketing" },
     { nombre: "Negociación Comercial", creditos: 3, ciclo: 9, area: "marketing" },
-    { nombre: "Logística en el sector público", creditos: 3, ciclo: 9, area: "logística" },
+    // Logística 9no — cadena principal conectada, paralela sin cambios
+    { nombre: "Logística en el sector público", creditos: 3, ciclo: 9, prereq: ["Operaciones II"], area: "logística" },
     { nombre: "Distribución y transporte", creditos: 3, ciclo: 9, area: "logística" },
     // 10mo - obligatorios
     { nombre: "Desarrollo de Investigación II", creditos: 3, ciclo: 10 },
@@ -510,7 +497,8 @@ const cursos = [
     { nombre: "Taller de Proyectos", creditos: 3, ciclo: 10, prereq: ["Gerencia de Proyectos"], area: "proyectos" },
     { nombre: "Gerencia de Marketing", creditos: 3, ciclo: 10, area: "marketing" },
     { nombre: "Neuromarketing", creditos: 3, ciclo: 10, area: "marketing" },
-    { nombre: "Gerencia Logística", creditos: 3, ciclo: 10, area: "logística" },
+    // Logística 10mo — cadena principal conectada, paralela sin cambios
+    { nombre: "Gerencia Logística", creditos: 3, ciclo: 10, prereq: ["Logística en el sector público"], area: "logística" },
     { nombre: "Logística Internacional", creditos: 3, ciclo: 10, area: "logística" },
 ];
 
@@ -526,11 +514,8 @@ const CREDITOS_MINIMOS = 220;
 const carrera = 'administracion';
 const prefix  = carrera + '_';
 
-// Estado de cada área: null | 'principal' | 'secundaria'
-// Usamos un Map para mantener orden
 let estadoAreas = {};
 
-// ── PERSISTENCIA ─────────────────────────────
 function guardarEstadoAreas() {
     localStorage.setItem(prefix + 'estadoAreas', JSON.stringify(estadoAreas));
 }
@@ -540,7 +525,6 @@ function cargarEstadoAreas() {
     if (guardado) {
         estadoAreas = JSON.parse(guardado);
     } else {
-        // Compatibilidad con formato anterior (2 checkboxes)
         const viejas = JSON.parse(localStorage.getItem(prefix + 'electivasSeleccionadas') || '[]');
         estadoAreas = {};
         viejas.forEach((a, i) => { estadoAreas[a] = i === 0 ? 'principal' : 'secundaria'; });
@@ -551,7 +535,6 @@ function areasSeleccionadas() {
     return Object.keys(estadoAreas).filter(a => estadoAreas[a] !== null && estadoAreas[a] !== undefined);
 }
 
-// ── RENDER CARDS DE ÁREAS ─────────────────────
 function renderAreasGrid() {
     const grid = document.getElementById('areas-grid');
     grid.innerHTML = '';
@@ -564,7 +547,7 @@ function renderAreasGrid() {
         const badge = document.createElement('span');
         badge.className = 'badge';
         badge.textContent = estado === 'principal' ? 'PRINCIPAL' : estado === 'secundaria' ? 'SECUNDARIA' : '';
-        
+
         const nombre = document.createElement('span');
         nombre.className = 'nombre';
         nombre.textContent = info.label;
@@ -598,7 +581,6 @@ function ciclarEstadoArea(area) {
     actualizarCreditos();
 }
 
-// ── RESUMEN CRÉDITOS POR ÁREA ─────────────────
 function renderResumenAreas() {
     const contenedor = document.getElementById('resumen-areas');
     const selec = areasSeleccionadas();
@@ -625,7 +607,6 @@ function renderResumenAreas() {
     });
 }
 
-// ── ACTUALIZAR BARRA DE PROGRESO ──────────────
 function actualizarCreditos() {
     const selec = areasSeleccionadas();
     let suma = 0, total = 0;
@@ -642,7 +623,6 @@ function actualizarCreditos() {
     document.getElementById('barra-progreso').style.width = pct + '%';
     document.getElementById('porcentaje').textContent = pct;
 
-    // Aviso créditos
     const aviso = document.getElementById('aviso-creditos');
     if (selec.length === 0) {
         aviso.className = 'aviso';
@@ -657,7 +637,6 @@ function actualizarCreditos() {
     renderResumenAreas();
 }
 
-// ── RENDER MALLA ──────────────────────────────
 function renderCursos() {
     const contenedor = document.getElementById('contenedor-cursos');
     contenedor.innerHTML = '';
@@ -677,7 +656,6 @@ function renderCursos() {
         titulo.textContent = `${ciclo}° Ciclo`;
         divCiclo.appendChild(titulo);
 
-        // Créditos del ciclo (solo visibles)
         const creditosCiclo = agrupados[ciclo]
             .filter(c => !c.area || selec.includes(c.area))
             .reduce((s,c) => s + c.creditos, 0);
@@ -711,7 +689,6 @@ function renderCursos() {
                 div.addEventListener('click', () => {
                     const yaCompletado = localStorage.getItem(prefix + c.nombre) === 'true';
 
-                    // Si va a MARCAR (no desmarcar), verificar límite de 26 cr por ciclo
                     if (!yaCompletado) {
                         const creditosCiclo = cursos
                             .filter(x => x.ciclo === c.ciclo && localStorage.getItem(prefix + x.nombre) === 'true')
@@ -735,7 +712,6 @@ function renderCursos() {
     });
 }
 
-// ── RESET ─────────────────────────────────────
 function inicializarEventListeners() {
     document.getElementById('reset').addEventListener('click', () => {
         if (!confirm('¿Seguro que quieres restablecer todo el progreso?')) return;
@@ -750,7 +726,6 @@ function inicializarEventListeners() {
     });
 }
 
-// ── INICIALIZAR ───────────────────────────────
 function inicializar() {
     cargarEstadoAreas();
     renderAreasGrid();
