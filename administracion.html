@@ -450,7 +450,7 @@ const cursos = [
     { nombre: "Gestión de Riesgos de los Proyectos", creditos: 3, ciclo: 7, area: "proyectos" },
     { nombre: "Marketing de servicios", creditos: 3, ciclo: 7, prereq: ["Marketing Digital"], area: "marketing" },
     { nombre: "Programación Neurolingüística", creditos: 3, ciclo: 7, area: "marketing" },
-    // Logística 7mo — cadena principal conectada, paralela sin cambios
+    // Logística 7mo
     { nombre: "Operaciones I", creditos: 3, ciclo: 7, prereq: ["Planeación de la demanda, pronósticos y simuladores"], area: "logística" },
     { nombre: "Aprovisionamiento y negociación", creditos: 3, ciclo: 7, area: "logística" },
     // 8vo - obligatorios
@@ -467,7 +467,7 @@ const cursos = [
     { nombre: "Gestión de proyectos públicos y privados", creditos: 3, ciclo: 8, area: "proyectos" },
     { nombre: "Marketing internacional", creditos: 3, ciclo: 8, prereq: ["Marketing de servicios"], area: "marketing" },
     { nombre: "Publicidad y Branding", creditos: 3, ciclo: 8, area: "marketing" },
-    // Logística 8vo — cadena principal conectada, paralela sin cambios
+    // Logística 8vo
     { nombre: "Operaciones II", creditos: 3, ciclo: 8, prereq: ["Operaciones I"], area: "logística" },
     { nombre: "Gestión de almacenes e inventarios", creditos: 3, ciclo: 8, area: "logística" },
     // 9no - obligatorios
@@ -481,9 +481,10 @@ const cursos = [
     { nombre: "Gestión de Riesgos Financieros", creditos: 3, ciclo: 9, prereq: ["Finanzas Internacionales"], area: "finanzas" },
     { nombre: "Finanzas Públicas", creditos: 3, ciclo: 9, area: "finanzas" },
     { nombre: "Gerencia de Proyectos", creditos: 3, ciclo: 9, prereq: ["Formulación y evaluación de proyectos sociales II"], area: "proyectos" },
-    { nombre: "Gerencia de Ventas", creditos: 3, ciclo: 9, area: "marketing" },
+    // ✅ CORREGIDO: Gerencia de Ventas ahora requiere Marketing internacional
+    { nombre: "Gerencia de Ventas", creditos: 3, ciclo: 9, prereq: ["Marketing internacional"], area: "marketing" },
     { nombre: "Negociación Comercial", creditos: 3, ciclo: 9, area: "marketing" },
-    // Logística 9no — cadena principal conectada, paralela sin cambios
+    // Logística 9no
     { nombre: "Logística en el sector público", creditos: 3, ciclo: 9, prereq: ["Operaciones II"], area: "logística" },
     { nombre: "Distribución y transporte", creditos: 3, ciclo: 9, area: "logística" },
     // 10mo - obligatorios
@@ -495,9 +496,10 @@ const cursos = [
     { nombre: "Auditoría en la Gestión del Talento Humano", creditos: 3, ciclo: 10, area: "talento" },
     { nombre: "Dirección financiera", creditos: 3, ciclo: 10, prereq: ["Gestión de Riesgos Financieros"], area: "finanzas" },
     { nombre: "Taller de Proyectos", creditos: 3, ciclo: 10, prereq: ["Gerencia de Proyectos"], area: "proyectos" },
-    { nombre: "Gerencia de Marketing", creditos: 3, ciclo: 10, area: "marketing" },
+    // ✅ CORREGIDO: Gerencia de Marketing ahora requiere Gerencia de Ventas
+    { nombre: "Gerencia de Marketing", creditos: 3, ciclo: 10, prereq: ["Gerencia de Ventas"], area: "marketing" },
     { nombre: "Neuromarketing", creditos: 3, ciclo: 10, area: "marketing" },
-    // Logística 10mo — cadena principal conectada, paralela sin cambios
+    // Logística 10mo
     { nombre: "Gerencia Logística", creditos: 3, ciclo: 10, prereq: ["Logística en el sector público"], area: "logística" },
     { nombre: "Logística Internacional", creditos: 3, ciclo: 10, area: "logística" },
 ];
